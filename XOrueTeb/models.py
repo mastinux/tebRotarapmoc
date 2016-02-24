@@ -7,8 +7,6 @@ import sys
 
 ORUE_TEB = "http://web.eurobet.it/webeb/scommesse-sportive"
 
-# todo : html does't contain proper values, check next site
-
 
 class OrueTebParser(HTMLParser):
 
