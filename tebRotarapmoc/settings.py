@@ -37,7 +37,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-)
+
+    "XIans",
+    "XMailiwLlih",
+    "XOrueTeb",
+    "XRetteb",
+    "XYddapRewop",
+    "rotarapmoc",
+    )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
