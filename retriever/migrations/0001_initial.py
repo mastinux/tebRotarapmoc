@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
             name='Match',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('origin', models.CharField(max_length=255)),
                 ('datetime', models.DateTimeField()),
                 ('home', models.CharField(max_length=255)),
                 ('visitor', models.CharField(max_length=255)),
