@@ -6,6 +6,8 @@ from io import StringIO
 from datetime import datetime
 from retriever.models import Match
 
+# todo : manage live scoring
+
 # https://docs.python.org/2/library/htmlparser.html
 # https://docs.python.org/2/howto/urllib2.html
 
@@ -32,12 +34,34 @@ months["Nov"] = 11
 months["Dic"] = 12
 
 
-def parse_datetime(formatted_date, formatted_time):
+def parse_datetime(formatted_date, formatted_time, home, visitor):
+    """
+    if formatted_date.find("gg"):
+        today = datetime.now()
+        day = today.day
+        month = today.month
+        year = today.year
+    else:
+        day, month = formatted_date.split(" ")
+        day = int(day)
+        month = months[month]
+        year = datetime.today().year
+    """
     day, month = formatted_date.split(" ")
     day = int(day)
     month = months[month]
     year = datetime.today().year
-
+    """
+    if "min" in formatted_time:
+        last_record = Match.get_last_match_stored(ORIGIN, datetime(year, month, day+1, 0, 0, 0), home, visitor)
+        hours = last_record.datetime.hour
+        mins = last_record.datetime.minute
+    else:
+        time, zone = formatted_time.split(" ")
+        hours, mins = time.split(":")
+        hours = int(hours)
+        mins = int(mins)
+    """
     time, zone = formatted_time.split(" ")
     hours, mins = time.split(":")
     hours = int(hours)
@@ -139,11 +163,13 @@ def retrieveMLdata():
                                 visitor_wins = float(visitor_wins.strip())
                                 visitor_wins_ok = visitor_wins
 
-            if home_wins_ok > 0:
+            if home_wins_ok > 0 and (not ("-" in formatted_time_ok)):
                 #print formatted_date_ok, formatted_time_ok, home_vs_visitor_ok, home_wins_ok, draw_ok, visitor_wins_ok
-                match_datetime = parse_datetime(formatted_date_ok, formatted_time_ok)
-
                 home_ok, visitor_ok = parse_teams(home_vs_visitor)
+                #print home_ok, visitor_ok
+
+                match_datetime = parse_datetime(formatted_date_ok, formatted_time_ok, home_ok, visitor_ok)
+                #print "proper datetime:", match_datetime
 
                 #print match_datetime, "\n", home_ok, "-", visitor_ok, \
                 #    "\t[", home_wins_ok, "/", draw_ok, "/", visitor_wins_ok, "]"

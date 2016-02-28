@@ -11,8 +11,8 @@ class Match(models.Model):
     price_2 = models.FloatField()
 
     def __unicode__(self):
-        string = "%s-%s [%s] | %4.2f | %4.2f | %4.2f |" % \
-                 (self.home, self.visitor, self.datetime, self.price_1, self.price_x, self.price_2)
+        string = "[%s] \t%s-%s [%s] \t| %4.2f | %4.2f | %4.2f |" % \
+                 (self.origin, self.home, self.visitor, self.datetime, self.price_1, self.price_x, self.price_2)
         return string
 
     def is_stored(self):
@@ -20,3 +20,12 @@ class Match(models.Model):
             return True
         else:
             return False
+
+    @staticmethod
+    def get_last_match_stored(origin, date, home, visitor):
+        # you must pass tomorrow as date
+        match_list = Match.objects.filter(origin=origin, datetime__lte=date, home=home, visitor=visitor)
+        if len(match_list) > 0:
+            return match_list[0]
+        else:
+            return None
