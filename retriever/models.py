@@ -16,10 +16,11 @@ class Match(models.Model):
         return string
 
     def is_stored(self):
-        if Match.objects.filter(origin=self.origin, datetime=self.datetime, home=self.home, visitor=self.visitor):
-            return True
+        tmp = Match.objects.filter(origin=self.origin, datetime=self.datetime, home=self.home, visitor=self.visitor)
+        if tmp:
+            return tmp
         else:
-            return False
+            return None
 
     @staticmethod
     def get_last_match_stored(origin, date, home, visitor):

@@ -71,7 +71,6 @@ def parse_datetime(formatted_date, formatted_time, home, visitor):
 
 
 def parse_teams(home_vs_visitor):
-    # returns a couple of teams
     values = home_vs_visitor.replace(" ", "").split()
     home = values[0]
     visitor = values[2]
@@ -122,15 +121,12 @@ def retrieveMLdata():
             visitor_wins_ok = -1
             for i, td_element in enumerate(tr_element.getchildren()):
                 if i == 0:
-                    #print "date"
                     span_element = td_element.getchildren()[0]
                     formatted_date_ok = span_element.text
                 elif i == 1:
-                    #print "hour"
                     span_element = td_element.getchildren()[0]
                     formatted_time_ok = span_element.text
                 elif i == 2:
-                    #print "home - visitor"
                     home_vs_visitor = ""
                     for ii, a_element in enumerate(td_element.getchildren()):
                         for iii, span_element in enumerate(a_element.getchildren()):
@@ -139,7 +135,6 @@ def retrieveMLdata():
                         break
                     home_vs_visitor_ok = home_vs_visitor
                 elif i == 4:
-                    #print "home wins"
                     for ii, div_element in enumerate(td_element.getchildren()):
                         for iii, divdiv_element in enumerate(div_element.getchildren()):
                             home_wins = divdiv_element.text
@@ -147,7 +142,6 @@ def retrieveMLdata():
                                 home_wins = float(home_wins.strip())
                                 home_wins_ok = home_wins
                 elif i == 5:
-                    #print "draw"
                     for ii, div_element in enumerate(td_element.getchildren()):
                         for iii, divdiv_element in enumerate(div_element.getchildren()):
                             draw = divdiv_element.text
@@ -155,7 +149,6 @@ def retrieveMLdata():
                                 draw = float(draw.strip())
                                 draw_ok = draw
                 elif i == 6:
-                    #print "visitor wins"
                     for ii, div_element in enumerate(td_element.getchildren()):
                         for iii, divdiv_element in enumerate(div_element.getchildren()):
                             visitor_wins = divdiv_element.text
@@ -181,5 +174,19 @@ def retrieveMLdata():
                 match.price_1 = home_wins_ok
                 match.price_x = draw_ok
                 match.price_2 = visitor_wins_ok
-                if not match.is_stored():
+
+                tmp = match.is_stored()
+                if tmp:
+                    tmp = tmp.first()
+                    if tmp.price_1 != match.price_1 or tmp.price_x != match.price_x or tmp.price_2 != match.price_2:
+                        print "\nupdate\t", match
+                        tmp.price_1 = match.price_1
+                        tmp.price_x = match.price_x
+                        tmp.price_2 = match.price_2
+                        tmp.update()
+                        print "to\t", tmp
+                    else:
+                        print tmp, "already stored"
+                else:
+                    print "saving", match
                     match.save()

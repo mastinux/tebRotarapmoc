@@ -123,10 +123,8 @@ def retrieveYRdata():
                     break
 
     for sixth_level_element in partial.getchildren():
-        #print sixth_level_element.tag, sixth_level_element.attrib
         if sixth_level_element.tag == "script":
             original_text = sixth_level_element.text
-            #print original_text
             item_list = original_text.split(";")
 
             for index, item in enumerate(item_list):
@@ -137,7 +135,6 @@ def retrieveYRdata():
                 if len(information) >= 82:
                     #for num, i in enumerate(information):
                     #    print num, i
-
                     partial_information = item_list[index - 2]
                     partial_information_splitted = partial_information.split(",")
 
@@ -155,7 +152,6 @@ def retrieveYRdata():
                     home_wins = information[base_scroll].replace("'", "").replace(" ", "")
                     draw = information[base_scroll + 11].replace("'", "").replace(" ", "")
                     visitor_wins = information[base_scroll + 22].replace("'", "").replace(" ", "")
-                    #print home_wins, draw, visitor_wins
 
                     match = Match()
                     match.origin = ORIGIN
@@ -166,5 +162,20 @@ def retrieveYRdata():
                     match.price_x = float(draw)
                     match.price_2 = float(visitor_wins)
 
-                    if not match.is_stored():
+                    tmp = match.is_stored()
+                    if tmp:
+                        tmp = tmp.first()
+                        if tmp.price_1 != match.price_1 or tmp.price_x != match.price_x or tmp.price_2 != match.price_2:
+                            print "\nupdate\t", match
+                            tmp.price_1 = match.price_1
+                            tmp.price_x = match.price_x
+                            tmp.price_2 = match.price_2
+                            match = tmp
+                            match.update()
+                            #tmp.update()
+                            print "to\t", tmp
+                        else:
+                            print tmp, "already stored"
+                    else:
+                        print "saving", match
                         match.save()

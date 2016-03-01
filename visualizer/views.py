@@ -13,13 +13,11 @@ def index(request):
     data = list()
     today = datetime.now()
 
-    #MLviews.retrieveMLdata()
-    #YRviews.retrieveYRdata()
+    MLviews.retrieveMLdata()
+    YRviews.retrieveYRdata()
 
     matches = Match.objects.all()\
         .filter(datetime__gte=today)
-    for m in matches:
-        print m
 
     homes = [m.home for m in matches]
     visitors = [m.visitor for m in matches]
@@ -54,10 +52,11 @@ def index(request):
             datum = {'home': homes[i], 'visitor': visitors[i], 'datetime': datetimes[i], 'matches': local,
                      'max_1': max_1, 'max_x': max_x, 'max_2': max_2, 'match_1_max': match_1_max,
                      'match_x_max': match_x_max, 'match_2_max': match_2_max, 'cost_1': cost_1, 'cost_x': cost_x,
-                     'cost_2': cost_2, 'total_cost': total_cost, 'payment': PAYMENT}
+                     'cost_2': cost_2, 'total_cost': total_cost}
 
             data.append(datum)
 
     context['data'] = data
+    context['payment'] = PAYMENT
 
     return render(request, 'index.html', context)
