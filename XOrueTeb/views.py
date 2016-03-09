@@ -1,30 +1,15 @@
 from django.shortcuts import render
 from HTMLParser import HTMLParser
 from urllib2 import urlopen, Request
+from lxml import etree
+from io import StringIO
 
 # https://docs.python.org/2/library/htmlparser.html
 # https://docs.python.org/2/howto/urllib2.html
 
-# todo : restart parsing this html
+# fixme : html does not report proper data
 
 ORUE_TEB = "http://web.eurobet.it/webeb/scommesse-sportive"
-
-
-class OrueTebParser(HTMLParser):
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "div":
-            #print "\n"
-            for name, value in attrs:
-                print value
-                if name == 'class' and value == 'box_container_scommesse_quote':
-                    print value
-
-    #def handle_endtag(self, tag):
-    #    print "Encountered an end tag : </", tag, ">"
-
-    #def handle_data(self, data):
-    #    print "data :\t\t", data
 
 
 req = Request(ORUE_TEB)
@@ -32,5 +17,9 @@ response = urlopen(req)
 encoding = response.headers.getparam('charset')
 html = response.read().decode(encoding)
 
-parser = OrueTebParser()
-parser.feed(html)
+myfile = open("my_html.txt", "w")
+myfile.write(html.encode('utf-8'))
+myfile.close()
+
+#parser = etree.HTMLParser()
+#tree = etree.parse(StringIO(html), parser)

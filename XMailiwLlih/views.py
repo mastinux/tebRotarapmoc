@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from urllib2 import urlopen, Request
 from lxml import etree
 from io import StringIO
@@ -110,9 +109,9 @@ def retrieveMLdata():
 
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO(html), parser)
-
+    parsed_event = 0
     for o in tree.getiterator():
-        if o.tag == "tr":
+        if o.tag == "tr" and parsed_event < 10:
             tr_element = o
             formatted_date_ok = ""
             formatted_time_ok = ""
@@ -190,3 +189,4 @@ def retrieveMLdata():
                 else:
                     print "saving", match
                     match.save()
+                parsed_event += 1
