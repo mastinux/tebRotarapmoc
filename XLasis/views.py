@@ -5,8 +5,8 @@ from io import StringIO
 # todo :    html does not contain proper data
 #           proceed in other way
 
-IANS = "https://www.snai.it/sport"
-ORIGIN = "Ians"
+LASIS = "http://www.sisal.it/scommesse-matchpoint/palinsesto?dis=1&man=21&fil=0"
+ORIGIN = "lasis"
 
 
 def parse_datetime(formatted_date, formatted_time):
@@ -16,9 +16,8 @@ def parse_datetime(formatted_date, formatted_time):
 def parse_teams(home_vs_visitor):
     print home_vs_visitor
 
-
-#def retrieveMLdata():
-req = Request(IANS)
+#def retrieveYRdata():
+req = Request(LASIS)
 response = urlopen(req)
 encoding = response.headers.getparam('charset')
 html = response.read().decode(encoding)
@@ -26,8 +25,7 @@ html = response.read().decode(encoding)
 parser = etree.HTMLParser()
 tree = etree.parse(StringIO(html), parser)
 
-string = etree.tostring(tree, pretty_print=True)
-
-my_file = open("my_html.txt", "w")
-my_file.write(string)
+indented_html = etree.tostring(tree, pretty_print=True)
+my_file = open("my_file.txt", "w")
+my_file.write(indented_html.encode('utf-8'))
 my_file.close()

@@ -1,16 +1,8 @@
-from django.shortcuts import render
 from urllib2 import urlopen, Request
 from lxml import etree
 from io import StringIO
-from datetime import datetime
 
-# https://docs.python.org/2/library/htmlparser.html
-# https://docs.python.org/2/howto/urllib2.html
-
-# http://lxml.de/tutorial.html
-
-# http://lxml.de/api/lxml.etree._ElementTree-class.html
-# http://lxml.de/api/lxml.etree._Element-class.html
+# todo : no more children found
 
 RETTEB = "https://www.lottomatica.it/scommesse/avvenimenti/calcio/italia/seriea"
 ORIGIN = "retteb"
@@ -28,31 +20,6 @@ def parse_teams(home_vs_visitor):
 req = Request(RETTEB)
 response = urlopen(req)
 html = response.read()
-
-"""
-parser = etree.HTMLParser()
-tree = etree.parse(StringIO(html), parser)
-result = etree.tostring(tree.getroot(), pretty_print=True, method="html")
-# print indented html code
-print result
-"""
-"""
-html2 = etree.HTML(html)
-result = etree.tostring(html2, pretty_print=True, method="html")
-# print indented html code
-print result
-"""
-"""
-parser = etree.HTMLParser(target=EchoTarget())
-# scroll html while printing data by EchoTarget()
-result = etree.HTML(html, parser)
-"""
-"""
-parser = etree.HTMLParser(target=etree.TreeBuilder())
-# result is the root of html, it contains head and body
-result = etree.HTML(html, parser)
-#print type(result) # <type 'lxml.etree._Element'>
-"""
 
 parser = etree.HTMLParser()
 tree = etree.parse(StringIO(unicode(html, "utf-8")), parser)

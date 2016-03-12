@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from urllib2 import urlopen, Request
 from lxml import etree
 from io import StringIO
@@ -6,14 +5,6 @@ from datetime import datetime
 from retriever.models import Match
 
 # todo : manage live scoring
-
-# https://docs.python.org/2/library/htmlparser.html
-# https://docs.python.org/2/howto/urllib2.html
-
-# http://lxml.de/tutorial.html
-
-# http://lxml.de/api/lxml.etree._ElementTree-class.html
-# http://lxml.de/api/lxml.etree._Element-class.html
 
 MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/321/Serie+A.html"
 ORIGIN = "mailliwLlih"
@@ -81,31 +72,6 @@ def retrieveMLdata():
     response = urlopen(req)
     encoding = response.headers.getparam('charset')
     html = response.read().decode(encoding)
-
-    """
-    parser = etree.HTMLParser()
-    tree = etree.parse(StringIO(html), parser)
-    result = etree.tostring(tree.getroot(), pretty_print=True, method="html")
-    # print indented html code
-    print result
-    """
-    """
-    html2 = etree.HTML(html)
-    result = etree.tostring(html2, pretty_print=True, method="html")
-    # print indented html code
-    print result
-    """
-    """
-    parser = etree.HTMLParser(target=EchoTarget())
-    # scroll html while printing data by EchoTarget()
-    result = etree.HTML(html, parser)
-    """
-    """
-    parser = etree.HTMLParser(target=etree.TreeBuilder())
-    # result is the root of html, it contains head and body
-    result = etree.HTML(html, parser)
-    #print type(result) # <type 'lxml.etree._Element'>
-    """
 
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO(html), parser)
@@ -178,14 +144,12 @@ def retrieveMLdata():
                 if tmp:
                     tmp = tmp.first()
                     if tmp.price_1 != match.price_1 or tmp.price_x != match.price_x or tmp.price_2 != match.price_2:
-                        print "\nupdate\t", match
-                        tmp.price_1 = match.price_1
-                        tmp.price_x = match.price_x
-                        tmp.price_2 = match.price_2
-                        tmp.update()
-                        print "to\t", tmp
+                        print "\nupdate\t", tmp
+                        tmp.delete()
+                        print "to\t", match
+                        match.save()
                     else:
-                        print tmp, "already stored"
+                        print match, "already stored"
                 else:
                     print "saving", match
                     match.save()
