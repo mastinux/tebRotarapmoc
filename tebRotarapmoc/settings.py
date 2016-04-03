@@ -38,13 +38,14 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    "XIans",
-    "XMailiwLlih",
-    "XOrueTeb",
-    "XRetteb",
-    "XYddapRewop",
-    "visualizer",
-    "retriever",
+    'XIans',
+    'XMailiwLlih',
+    'XOrueTeb',
+    'XRetteb',
+    'XYddapRewop',
+    'visualizer',
+    'retriever',
+    'pdfrw',
     )
 
 MIDDLEWARE_CLASSES = (

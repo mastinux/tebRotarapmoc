@@ -28,6 +28,6 @@ tree = etree.parse(StringIO(html), parser)
 
 string = etree.tostring(tree, pretty_print=True)
 
-my_file = open("my_html.txt", "w")
+my_file = open("my_html.html", "w")
 my_file.write(string)
 my_file.close()

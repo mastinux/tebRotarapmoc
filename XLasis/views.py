@@ -6,6 +6,7 @@ from io import StringIO
 #           proceed in other way
 
 LASIS = "http://www.sisal.it/scommesse-matchpoint/palinsesto?dis=1&man=21&fil=0"
+PDF_LASIS = "http://landing.sisal.it/volantini/Scommesse_Sport/Quote/calcio%20base%20per%20data.pdf"
 ORIGIN = "lasis"
 
 
@@ -17,6 +18,7 @@ def parse_teams(home_vs_visitor):
     print home_vs_visitor
 
 #def retrieveYRdata():
+"""
 req = Request(LASIS)
 response = urlopen(req)
 encoding = response.headers.getparam('charset')
@@ -29,3 +31,13 @@ indented_html = etree.tostring(tree, pretty_print=True)
 my_file = open("my_file.txt", "w")
 my_file.write(indented_html.encode('utf-8'))
 my_file.close()
+"""
+
+PDF_NAME = "document.pdf"
+
+response = urlopen(PDF_LASIS)
+f = open(PDF_NAME, 'w')
+f.write(response.read())
+f.close()
+
+# todo : parse pdf
