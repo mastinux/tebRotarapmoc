@@ -8,13 +8,20 @@ from datetime import datetime
 PAYMENT = 100
 
 
+def present(datum, data):
+    for d in data:
+        if d["home"] == datum["home"] and d["visitor"] == datum["visitor"] and d["datetime"] == datum["datetime"]:
+            return True
+    return False
+
+
 def index(request):
     context = {}
     data = list()
     today = datetime.now()
 
-    MLviews.retrieveMLdata()
-    YRviews.retrieveYRdata()
+    #MLviews.retrieveMLdata()
+    #YRviews.retrieveYRdata()
 
     matches = Match.objects.all()\
         .filter(datetime__gte=today)
@@ -53,8 +60,8 @@ def index(request):
                      'max_1': max_1, 'max_x': max_x, 'max_2': max_2, 'match_1_max': match_1_max,
                      'match_x_max': match_x_max, 'match_2_max': match_2_max, 'cost_1': cost_1, 'cost_x': cost_x,
                      'cost_2': cost_2, 'total_cost': total_cost}
-
-            data.append(datum)
+            if not present(datum, data):
+                data.append(datum)
 
     context['data'] = data
     context['payment'] = PAYMENT
