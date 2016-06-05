@@ -1,10 +1,12 @@
-from urllib2 import urlopen, Request
-from lxml import etree
-from io import StringIO
 from datetime import datetime
+from io import StringIO
+from lxml import etree
+from urllib2 import Request, urlopen
 from retriever.models import Match
 
-MAILLIW_LLIH = "http://www.paddypower.it/scommesse-calcio/partite/serie-a"
+# MAILLIW_LLIH = "http://www.paddypower.it/scommesse-calcio/partite/serie-a"
+MAILLIW_LLIH = "http://www.paddypower.it/scommesse-calcio/partite/euro2016"
+
 ORIGIN = "yddapRewop"
 
 
@@ -29,8 +31,8 @@ def parse_teams(home_vs_visitor):
 
     return home, visitor
 
-
-def retrieveYRdata():
+"""
+def retrieveYRdata_old():
     req = Request(MAILLIW_LLIH)
     response = urlopen(req)
     encoding = response.headers.getparam('charset')
@@ -85,11 +87,11 @@ def retrieveYRdata():
 
             for index, item in enumerate(item_list):
                 information = item.split(",")
-                #for num, i in enumerate(information):
+                # for num, i in enumerate(information):
                 #    print num, i
 
                 if len(information) >= 82:
-                    #for num, i in enumerate(information):
+                    # for num, i in enumerate(information):
                     #    print num, i
                     partial_information = item_list[index - 2]
                     partial_information_splitted = partial_information.split(",")
@@ -122,12 +124,106 @@ def retrieveYRdata():
                     if tmp:
                         tmp = tmp.first()
                         if tmp.price_1 != match.price_1 or tmp.price_x != match.price_x or tmp.price_2 != match.price_2:
-                            print "\nupdate\t", tmp
+                            print('\nupdate\t', tmp)
                             tmp.delete()
-                            print "to\t", match
+                            print("to\t", match)
                             match.save()
                         else:
-                            print match, "already stored"
+                            print(match, "already stored")
                     else:
-                        print "saving", match
+                        print("saving", match)
                         match.save()
+"""
+
+
+def parse_td_elements(elements):
+    home = None
+    home_price = None
+    draw = None
+    draw_price = None
+    visitor = None
+    visitor_price = None
+
+    for e in elements:
+        e.tag
+        if e.attrib['class'] == "team":
+            if not home:
+                home = e.text
+            elif not draw:
+                draw = e.text
+            else:
+                visitor = e.text
+        elif e.attrib['class'] == "price":
+            for c in e.getiterator():
+                if c.tag == "a":
+                    if not home_price:
+                        home_price = c.text
+                    elif not draw_price:
+                        draw_price = c.text
+                    else:
+                        visitor_price = c.text
+
+    #print draw, draw_price
+    #print home, home_price
+    #print visitor, visitor_price
+
+    match = Match()
+    match.origin = ORIGIN
+    match.datetime = datetime(2016, 06, 30, 0, 0)
+    match.home = home[:-1]
+    match.visitor = visitor[:-1]
+    match.price_1 = float(home_price)
+    match.price_x = float(draw_price)
+    match.price_2 = float(draw_price)
+
+    tmp = match.is_stored()
+    if tmp:
+        tmp = tmp.first()
+        if tmp.price_1 != match.price_1 or tmp.price_x != match.price_x or tmp.price_2 != match.price_2:
+            print '\nupdate\t', tmp
+            tmp.delete()
+            print "to\t", match
+            match.save()
+        else:
+            print match, "already stored"
+    else:
+        print "saving", match
+        match.save()
+
+
+def retrieveYRdata():
+    req = Request(MAILLIW_LLIH)
+    response = urlopen(req)
+    encoding = response.headers.getparam('charset')
+    html = response.read().decode(encoding)
+
+    parser = etree.HTMLParser()
+    tree = etree.parse(StringIO(html), parser)
+
+    elements = list()
+    new_elements = list()
+
+    for div_element in tree.getiterator("div"):
+        if "class" in div_element.keys():
+            if div_element.attrib['class'] == "fb-mkt":
+                new_elements.append(div_element)
+
+    tree = None
+    elements = new_elements
+    new_elements = list()
+
+    for div_element in elements:
+        for table_element in div_element.getiterator("table"):
+            if "class" in table_element.keys():
+                new_elements.append(table_element)
+
+    elements = new_elements
+    new_elements = list()
+
+    for table_element in elements:
+        #print "---", table_element.tag, table_element.attrib
+        for element in table_element.getiterator():
+            if element.tag == "td":
+                new_elements.append(element)
+        parse_td_elements(new_elements)
+        new_elements = list()

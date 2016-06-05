@@ -16,7 +16,9 @@ class Match(models.Model):
         return string
 
     def is_stored(self):
-        tmp = Match.objects.filter(origin=self.origin, datetime=self.datetime, home=self.home, visitor=self.visitor)
+        tmp = Match.objects.filter(origin=self.origin
+                                   #, datetime=self.datetime
+                                   , home=self.home, visitor=self.visitor)
         if tmp:
             return tmp
         else:

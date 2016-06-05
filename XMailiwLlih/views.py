@@ -6,7 +6,8 @@ from retriever.models import Match
 
 # todo : manage live scoring
 
-MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/321/Serie+A.html"
+#MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/321/Serie+A.html"
+MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/9392/Euro+2016.html"
 ORIGIN = "mailliwLlih"
 
 months = dict()
