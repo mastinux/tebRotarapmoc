@@ -174,7 +174,7 @@ def parse_td_elements(elements):
     match.visitor = visitor[:-1]
     match.price_1 = float(home_price)
     match.price_x = float(draw_price)
-    match.price_2 = float(draw_price)
+    match.price_2 = float(visitor_price)
 
     tmp = match.is_stored()
     if tmp:

@@ -33,7 +33,8 @@ def index(request):
     #datetimes = [m.datetime for m in matches]
 
     for i in range(0, len(homes)):
-        local = matches.filter(home=homes[i], visitor=visitors[i]
+        local = matches.filter(home=homes[i]
+                               , visitor=visitors[i]
                                #, datetime=datetimes[i]
                                )
         print local
