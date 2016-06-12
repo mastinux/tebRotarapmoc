@@ -45,8 +45,10 @@ INSTALLED_APPS = (
     'XYddapRewop',
     'visualizer',
     'retriever',
+
     'pdfrw',
-    )
+    'execjs',
+)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -90,7 +92,6 @@ DATABASES = {
     }
 }
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -111,5 +112,5 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static/bower_components/bootstrap/dist"),
+    os.path.join(BASE_DIR, "static/bower_components/"),
 )

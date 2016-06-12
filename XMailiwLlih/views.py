@@ -4,8 +4,6 @@ from io import StringIO
 from datetime import datetime
 from retriever.models import Match
 
-# todo : manage live scoring
-
 #MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/321/Serie+A.html"
 MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/9392/Euro+2016.html"
 ORIGIN = "mailliwLlih"
@@ -127,7 +125,8 @@ def retrieveMLdata():
                 home_ok, visitor_ok = parse_teams(home_vs_visitor)
                 #print home_ok, visitor_ok
 
-                match_datetime = parse_datetime(formatted_date_ok, formatted_time_ok, home_ok, visitor_ok)
+                #match_datetime = parse_datetime(formatted_date_ok, formatted_time_ok, home_ok, visitor_ok)
+                match_datetime = datetime.now()
                 #print "proper datetime:", match_datetime
 
                 #print match_datetime, "\n", home_ok, "-", visitor_ok, \

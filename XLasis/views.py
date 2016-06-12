@@ -19,6 +19,13 @@ def parse_teams(home_vs_visitor):
 
 #def retrieveYRdata():
 """
+PDF_NAME = "document.pdf"
+
+response = urlopen(PDF_LASIS)
+f = open(PDF_NAME, 'w')
+f.write(response.read())
+f.close()
+"""
 req = Request(LASIS)
 response = urlopen(req)
 encoding = response.headers.getparam('charset')
@@ -27,17 +34,8 @@ html = response.read().decode(encoding)
 parser = etree.HTMLParser()
 tree = etree.parse(StringIO(html), parser)
 
-indented_html = etree.tostring(tree, pretty_print=True)
-my_file = open("my_file.txt", "w")
-my_file.write(indented_html.encode('utf-8'))
-my_file.close()
-"""
+for element in tree.getiterator("div"):
+    if "class" in element.attrib and element.attrib["class"] == "event":
+        print element.tag, element.attrib
 
-PDF_NAME = "document.pdf"
-
-response = urlopen(PDF_LASIS)
-f = open(PDF_NAME, 'w')
-f.write(response.read())
-f.close()
-
-# todo : parse pdf
+# FIXME: can't access div {'class': 'event odd'}

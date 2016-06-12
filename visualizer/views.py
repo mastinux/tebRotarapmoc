@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from XMailiwLlih import views as MLviews
 from XYddapRewop import views as YRviews
+from XIans import views as Iviews
 from retriever.models import Match
 from datetime import datetime
 
@@ -20,8 +21,10 @@ def index(request):
     data = list()
     today = datetime.now()
 
+    """
     for m in Match.objects.all():
         Match.delete(m)
+    """
 
     MLviews.retrieveMLdata()
     YRviews.retrieveYRdata()
@@ -37,7 +40,7 @@ def index(request):
                                , visitor=visitors[i]
                                #, datetime=datetimes[i]
                                )
-        print local
+        #print local
         if len(local) > 1:
             max_1 = local[0].price_1
             match_1_max = 0
@@ -72,3 +75,7 @@ def index(request):
     context['payment'] = PAYMENT
 
     return render(request, 'index.html', context)
+
+
+def index_2(request):
+    return render(request, 'index_2.html')

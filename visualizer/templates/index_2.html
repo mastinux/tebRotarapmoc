@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizer 2</title>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+        $( window ).load(function() {
+            console.log( "processing data" );
+
+            bodyObj = document.body
+            iframeObj = $(bodyObj).children()[0]
+
+            console.log( iframeObj );
+        });
+    </script>
+</head>
+
+<body>
+    <!-- https://www.snai.it/sport -->
+    <iframe src="https://www.snai.it/sport"></iframe>
+</body>
+</html>
