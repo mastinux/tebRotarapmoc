@@ -21,76 +21,147 @@
   <body>
     <br>
     <div class="col-lg-12">
-        <div class="row">
-        {% for datum in data %}
-        <div class="panel panel-default col-lg-4">
-          <!-- Default panel contents -->
-          <div class="panel-heading">{{ datum.home }} - {{ datum.visitor }} | {{ datum.datetime }}</div>
-          <div class="panel-body bg-info">
-              <table class="table">
-                  <thead>
-                  <tr>
-                      <th>origin</th>
-                      <th>1</th>
-                      <th>x</th>
-                      <th>2</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {% for record in datum.matches %}
+        {% comment %}
+            {% for datum in data %}
+                <div class="panel panel-default col-lg-4">
+              <!-- Default panel contents -->
+              <div class="panel-heading">{{ datum.home }} - {{ datum.visitor }} | {{ datum.datetime }}</div>
+              <div class="panel-body bg-info">
+                  <table class="table">
+                      <thead>
                       <tr>
-                          <td>{{ record.origin }}</td>
-                          <td>
-                              {% if forloop.counter0 == datum.match_1_max %}
-                                <span class="label label-primary">
-                              {% else %}
-                                <span class="label label-default">
-                              {% endif %}
-                                {{ record.price_1 }}
-                                </span>
-                          </td>
-                          <td>
-                              {% if forloop.counter0 == datum.match_x_max %}
-                                <span class="label label-primary">
-                              {% else %}
-                                <span class="label label-default">
-                              {% endif %}
-                                {{ record.price_x }}
-                                </span>
-                          </td>
-                          <td>
-                              {% if forloop.counter0 == datum.match_2_max %}
-                                <span class="label label-primary">
-                              {% else %}
-                                <span class="label label-default">
-                              {% endif %}
-                                {{ record.price_2 }}
-                                </span>
-                          </td>
+                          <th>origin</th>
+                          <th>1</th>
+                          <th>x</th>
+                          <th>2</th>
                       </tr>
-                  {% endfor %}
-                      <tr>
-                          <td></td>
-                          <td><span class="label label-warning">{{ datum.cost_1|floatformat:2 }}</span></td>
-                          <td><span class="label label-warning">{{ datum.cost_x|floatformat:2 }}</span></td>
-                          <td><span class="label label-warning">{{ datum.cost_2|floatformat:2 }}</span></td>
-                          <td>
-                              {% if datum.total_cost < payment %}
-                                  <span class="label label-success">
-                              {% else %}
-                                  <span class="label label-danger">
-                              {% endif %}
-                                {{ datum.total_cost|floatformat:2 }}
-                                  </span>
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
+                      </thead>
+                      <tbody>
+                      {% for record in datum.matches %}
+                          <tr>
+                              <td>{{ record.origin }}</td>
+                              <td>
+                                  {% if forloop.counter0 == datum.match_1_max %}
+                                    <span class="label label-primary">
+                                  {% else %}
+                                    <span class="label label-default">
+                                  {% endif %}
+                                    {{ record.price_1 }}
+                                    </span>
+                              </td>
+                              <td>
+                                  {% if forloop.counter0 == datum.match_x_max %}
+                                    <span class="label label-primary">
+                                  {% else %}
+                                    <span class="label label-default">
+                                  {% endif %}
+                                    {{ record.price_x }}
+                                    </span>
+                              </td>
+                              <td>
+                                  {% if forloop.counter0 == datum.match_2_max %}
+                                    <span class="label label-primary">
+                                  {% else %}
+                                    <span class="label label-default">
+                                  {% endif %}
+                                    {{ record.price_2 }}
+                                    </span>
+                              </td>
+                          </tr>
+                      {% endfor %}
+                          <tr>
+                              <td></td>
+                              <td><span class="label label-warning">{{ datum.cost_1|floatformat:2 }}</span></td>
+                              <td><span class="label label-warning">{{ datum.cost_x|floatformat:2 }}</span></td>
+                              <td><span class="label label-warning">{{ datum.cost_2|floatformat:2 }}</span></td>
+                              <td>
+                                  {% if datum.total_cost < payment %}
+                                      <span class="label label-success">
+                                  {% else %}
+                                      <span class="label label-danger">
+                                  {% endif %}
+                                    {{ datum.total_cost|floatformat:2 }}
+                                      </span>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
 
-          </div>
-        </div>
-        {% endfor %}
-    </div>
+              </div>
+            </div>
+            {% endfor %}
+        {% endcomment %}
+
+        <!-- Table -->
+        <table class="table">
+          <thead>
+              <tr>
+                  <th>origin</th>
+                  <th>home</th>
+                  <th>visitor</th>
+                  <th>charge 1</th>
+                  <th>charge x</th>
+                  <th>charge 2</th>
+                  <th>total charge</th>
+              </tr>
+          </thead>
+          <tbody>
+          {% for datum in data %}
+            {% for record in datum.matches %}
+                <tr>
+                    <td>{{ record.origin }}</td>
+                    <td>{{ datum.home }}</td>
+                    <td>{{ datum.visitor }}</td>
+                    <td>
+                        {% if forloop.counter0 == datum.match_1_max %}
+                            <span class="label label-primary">
+                                {{ record.price_1 }}
+                            </span>
+                            <span class="label label-warning">{{ datum.cost_1|floatformat:2 }}</span>
+                        {% else %}
+                            <span class="label label-default">
+                                {{ record.price_1 }}
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if forloop.counter0 == datum.match_x_max %}
+                            <span class="label label-primary">
+                                {{ record.price_x }}
+                            </span>
+                            <span class="label label-warning">{{ datum.cost_x|floatformat:2 }}</span>
+                        {% else %}
+                            <span class="label label-default">
+                                {{ record.price_x }}
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if forloop.counter0 == datum.match_2_max %}
+                            <span class="label label-primary">
+                                {{ record.price_2 }}
+                            </span>
+                            <span class="label label-warning">{{ datum.cost_2|floatformat:2 }}</span>
+                        {% else %}
+                            <span class="label label-default">
+                                {{ record.price_2 }}
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if datum.total_cost < payment %}
+                            <span class="label label-success">
+                        {% else %}
+                            <span class="label label-danger">
+                        {% endif %}
+                                {{ datum.total_cost|floatformat:2 }}
+                            </span>
+                    </td>
+                </tr>
+            {% endfor %}
+          {% endfor %}
+          </tbody>
+      </table>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

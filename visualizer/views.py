@@ -32,16 +32,23 @@ def index(request):
     matches = Match.objects.all()
 
     homes = [m.home for m in matches]
-    visitors = [m.visitor for m in matches]
+    homes_set = set(list(homes))
+
+    #visitors = [m.visitor for m in matches]
     #datetimes = [m.datetime for m in matches]
 
-    for i in range(0, len(homes)):
+    #for i in range(0, len(homes)):
+    for home in homes_set:
+        """
         local = matches.filter(home=homes[i]
                                , visitor=visitors[i]
                                #, datetime=datetimes[i]
                                )
+        """
+        local = matches.filter(home=home)
         #print local
         if len(local) > 1:
+            visitor = local[0].visitor
             max_1 = local[0].price_1
             match_1_max = 0
             max_x = local[0].price_x
@@ -64,7 +71,7 @@ def index(request):
             cost_2 = PAYMENT / max_2
             total_cost = cost_1 + cost_x + cost_2
 
-            datum = {'home': homes[i], 'visitor': visitors[i], 'datetime': datetime.now(), 'matches': local,
+            datum = {'home': home, 'visitor': visitor, 'datetime': datetime.now(), 'matches': local,
                      'max_1': max_1, 'max_x': max_x, 'max_2': max_2, 'match_1_max': match_1_max,
                      'match_x_max': match_x_max, 'match_2_max': match_2_max, 'cost_1': cost_1, 'cost_x': cost_x,
                      'cost_2': cost_2, 'total_cost': total_cost}
@@ -79,3 +86,14 @@ def index(request):
 
 def index_2(request):
     return render(request, 'index_2.html')
+
+
+def index_3(request):
+    context = {}
+    data = list()
+
+    matches = Match.objects.all().order_by("home")
+
+    context["matches"] = matches
+
+    return render(request, 'index_3.html', context)
