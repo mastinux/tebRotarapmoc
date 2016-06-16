@@ -20,11 +20,9 @@ def index(request):
     context = {}
     data = list()
     today = datetime.now()
-
-    """
+    
     for m in Match.objects.all():
         Match.delete(m)
-    """
 
     MLviews.retrieveMLdata()
     YRviews.retrieveYRdata()
@@ -46,9 +44,11 @@ def index(request):
                                )
         """
         local = matches.filter(home=home)
+	visitor = local[0].visitor
+	local = matches.filter(home=home, visitor=visitor)
         #print local
         if len(local) > 1:
-            visitor = local[0].visitor
+            #visitor = local[0].visitor
             max_1 = local[0].price_1
             match_1_max = 0
             max_x = local[0].price_x
@@ -90,9 +90,8 @@ def index_2(request):
 
 def index_3(request):
     context = {}
-    data = list()
 
-    matches = Match.objects.all().order_by("home")
+    matches = Match.objects.all().order_by("home", "visitor")
 
     context["matches"] = matches
 

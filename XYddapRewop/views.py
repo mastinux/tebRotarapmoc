@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from io import StringIO
 from lxml import etree
 from urllib2 import Request, urlopen
@@ -20,14 +20,14 @@ def parse_datetime(formatted_date, formatted_time):
     hours = int(time_list[0].replace("'", ""))
     mins = int(time_list[1].replace("'", ""))
 
-    return datetime(year, month, day, hours, mins)
+    return date(year, month, day)
 
 
 def parse_teams(home_vs_visitor):
     teams = home_vs_visitor.split("-")
 
-    home = teams[0].replace(" ", "").replace("'", "")
-    visitor = teams[1].replace(" ", "").replace("'", "")
+    home = teams[0].replace(" ", "").replace("'", "").replace(" ", "")
+    visitor = teams[1].replace(" ", "").replace("'", "").replace(" ", "")
 
     return home, visitor
 
@@ -169,9 +169,9 @@ def parse_td_elements(elements):
 
     match = Match()
     match.origin = ORIGIN
-    match.datetime = datetime(2016, 06, 30, 0, 0)
-    match.home = home[:-1]
-    match.visitor = visitor[:-1]
+    match.datetime = date(2016, 6, 1)
+    match.home = home[:-1].replace(" ", "")
+    match.visitor = visitor[:-1].replace(" ", "")
     match.price_1 = float(home_price)
     match.price_x = float(draw_price)
     match.price_2 = float(visitor_price)

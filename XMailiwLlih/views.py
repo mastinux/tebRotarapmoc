@@ -1,7 +1,7 @@
 from urllib2 import urlopen, Request
 from lxml import etree
 from io import StringIO
-from datetime import datetime
+from datetime import date
 from retriever.models import Match
 
 #MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/321/Serie+A.html"
@@ -39,7 +39,7 @@ def parse_datetime(formatted_date, formatted_time, home, visitor):
     day, month = formatted_date.split(" ")
     day = int(day)
     month = months[month]
-    year = datetime.today().year
+    year = date.today().year
     """
     if "min" in formatted_time:
         last_record = Match.get_last_match_stored(ORIGIN, datetime(year, month, day+1, 0, 0, 0), home, visitor)
@@ -56,7 +56,7 @@ def parse_datetime(formatted_date, formatted_time, home, visitor):
     hours = int(hours)
     mins = int(mins)
 
-    return datetime(year, month, day, hours, mins)
+    return date(year, month, day)
 
 
 def parse_teams(home_vs_visitor):
@@ -126,7 +126,7 @@ def retrieveMLdata():
                 #print home_ok, visitor_ok
 
                 #match_datetime = parse_datetime(formatted_date_ok, formatted_time_ok, home_ok, visitor_ok)
-                match_datetime = datetime.now()
+                match_datetime = date(2016, 6, 1)
                 #print "proper datetime:", match_datetime
 
                 #print match_datetime, "\n", home_ok, "-", visitor_ok, \
