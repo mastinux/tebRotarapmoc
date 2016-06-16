@@ -37,15 +37,10 @@ def index(request):
 
     #for i in range(0, len(homes)):
     for home in homes_set:
-        """
-        local = matches.filter(home=homes[i]
-                               , visitor=visitors[i]
-                               #, datetime=datetimes[i]
-                               )
-        """
+        #local = matches.filter(home=homes[i], visitor=visitors[i], datetime=datetimes[i])
         local = matches.filter(home=home)
-	visitor = local[0].visitor
-	local = matches.filter(home=home, visitor=visitor)
+        visitor = local[0].visitor
+        local = matches.filter(home=home, visitor=visitor)
         #print local
         if len(local) > 1:
             #visitor = local[0].visitor
@@ -85,14 +80,14 @@ def index(request):
 
 
 def index_2(request):
-    return render(request, 'index_2.html')
-
-
-def index_3(request):
     context = {}
 
     matches = Match.objects.all().order_by("home", "visitor")
 
     context["matches"] = matches
 
-    return render(request, 'index_3.html', context)
+    return render(request, 'index_2.html', context)
+
+
+def index_3(request):
+    return render(request, 'index_3.html')
