@@ -26,6 +26,7 @@ def index(request):
 
     MLviews.retrieveMLdata()
     YRviews.retrieveYRdata()
+    Iviews.retrieveIdata()
 
     matches = Match.objects.all()
 
