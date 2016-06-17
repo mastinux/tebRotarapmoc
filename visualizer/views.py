@@ -83,8 +83,9 @@ def index_2(request):
     context = {}
 
     matches = Match.objects.all().order_by("home", "visitor")
-
     context["matches"] = matches
+
+    
 
     return render(request, 'index_2.html', context)
 

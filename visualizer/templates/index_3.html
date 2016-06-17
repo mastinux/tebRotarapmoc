@@ -1,15 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Test</title>
+    <!--
+        <link href="{% static 'my_functions.js' %}" rel="text/javascript">
+    -->
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        $(window).load(function() {
+            console.log('processing my page')
+
+            a = $('#i').contents()
+            console.log( a )
+
+            // console says:
+
+            // jquery-1.9.1.js:5725 Uncaught SecurityError:
+            // Failed to read the 'contentDocument' property from 'HTMLIFrameElement':
+            // Blocked a frame with origin "https://localhost:8000"
+            // from accessing a frame with origin "https://www.snai.it".
+            // Protocols, domains, and ports must match.
+        });
+    </script>
 </head>
 
 <body>
 
     <!-- -->
-
+    <iframe id="i" src="https://www.snai.it/sport"></iframe>
 </body>
 
 </html>

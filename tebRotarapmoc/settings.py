@@ -48,6 +48,10 @@ INSTALLED_APPS = (
 
     'pdfrw',
     'execjs',
+
+    # HTTPS
+    # 'djangosecure',
+    # 'sslserver',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,6 +63,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
+    # HTTPS
+    # 'djangosecure.middleware.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'tebRotarapmoc.urls'
@@ -105,12 +112,13 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/bower_components/"),
 )
+
+# HTTPS
+# SECURE_SSL_REDIRECT = True
