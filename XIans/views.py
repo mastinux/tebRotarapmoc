@@ -19,7 +19,13 @@ def parse_datetime(formatted_date, formatted_time):
 def parse_teams(element):
     for a_element in element.getiterator("a"):
         teams = (a_element.text).replace(" ", "").replace("\n", "").split("-")
-        return teams[0], teams[1]
+        home = teams[0]
+        if home == "NIrlanda":
+            home = "Irlandadelnord"
+        visitor = teams[1]
+        if visitor == "NIrlanda":
+            visitor = "Irlandadelnord"
+        return home.lower().capitalize(), visitor.lower().capitalize()
 
 
 def retrieveHtml():

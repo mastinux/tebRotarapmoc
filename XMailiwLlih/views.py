@@ -134,8 +134,8 @@ def retrieveMLdata():
                 match = Match()
                 match.origin = ORIGIN
                 match.datetime = match_datetime
-                match.home = home_ok
-                match.visitor = visitor_ok
+                match.home = home_ok.lower().capitalize()
+                match.visitor = visitor_ok.lower().capitalize()
                 match.price_1 = home_wins_ok
                 match.price_x = draw_ok
                 match.price_2 = visitor_wins_ok

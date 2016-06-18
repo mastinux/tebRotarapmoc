@@ -19,6 +19,7 @@
     <![endif]-->
   </head>
   <body>
+    {% include "navbar.html" %}
     <br>
     <div class="col-lg-12">
         {% comment %}
@@ -96,22 +97,31 @@
         <table class="table">
           <thead>
               <tr>
-                  <th>origin</th>
                   <th>home</th>
                   <th>visitor</th>
-                  <th>charge 1</th>
-                  <th>charge x</th>
-                  <th>charge 2</th>
+                  <th>origin</th>
+                  <th>price 1 | charge 1</th>
+                  <th>price x | charge x</th>
+                  <th>price 2 | charge 2</th>
                   <th>total charge</th>
               </tr>
           </thead>
           <tbody>
           {% for datum in data %}
+                <tr>
+                    <td><b>{{ datum.home }}</b></td>
+                    <td><b>{{ datum.visitor }}</b></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             {% for record in datum.matches %}
                 <tr>
+                    <td></td>
+                    <td></td>
                     <td>{{ record.origin }}</td>
-                    <td>{{ datum.home }}</td>
-                    <td>{{ datum.visitor }}</td>
                     <td>
                         {% if forloop.counter0 == datum.match_1_max %}
                             <span class="label label-primary">

@@ -170,8 +170,8 @@ def parse_td_elements(elements):
     match = Match()
     match.origin = ORIGIN
     match.datetime = date(2016, 6, 1)
-    match.home = home[:-1].replace(" ", "")
-    match.visitor = visitor[:-1].replace(" ", "")
+    match.home = home[:-1].replace(" ", "").lower().capitalize()
+    match.visitor = visitor[:-1].replace(" ", "").lower().capitalize()
     match.price_1 = float(home_price)
     match.price_x = float(draw_price)
     match.price_2 = float(visitor_price)
