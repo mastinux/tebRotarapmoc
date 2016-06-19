@@ -4,7 +4,6 @@ from io import StringIO
 from datetime import date
 from retriever.models import Match
 
-#MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/321/Serie+A.html"
 MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/9392/Euro+2016.html"
 ORIGIN = "mailliwLlih"
 

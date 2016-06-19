@@ -3,6 +3,9 @@ from XMailiwLlih import views as MLviews
 from XYddapRewop import views as YRviews
 from XIans import views as Iviews
 from XLasis import views as Lviews
+from XOrueTeb import views as OTviews
+from XRetteb import views as Rviews
+from XTebCilc import views as Tviews
 from retriever.models import Match
 from datetime import datetime
 
@@ -17,13 +20,17 @@ def present(datum, data):
 
 
 def refresh_data():
+
     for m in Match.objects.all():
         Match.delete(m)
 
-    MLviews.retrieveMLdata()
-    YRviews.retrieveYRdata()
     Iviews.retrieveIdata()
     Lviews.retrieveLdata()
+    MLviews.retrieveMLdata()
+    OTviews.retrieveOdata()
+    Rviews.retrieveMLdata()
+    Tviews.retrieveTCdata()
+    #YRviews.retrieveYRdata()
 
 
 def index(request):
