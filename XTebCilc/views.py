@@ -4,7 +4,6 @@ from io import StringIO
 from datetime import date
 from retriever.models import Match
 
-TEB_CILC = "https://www.betclic.it/calcio/euro-2016-e122"
 ORIGIN = "tebCilc"
 
 
@@ -62,8 +61,8 @@ def parse_div_element(element):
                 match.save()
 
 
-def retrieveTCdata():
-    req = Request(TEB_CILC)
+def retrieveTCdata(url):
+    req = Request(url)
     response = urlopen(req)
     encoding = response.headers.getparam('charset')
     html = response.read().decode(encoding)

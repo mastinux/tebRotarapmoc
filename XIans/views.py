@@ -7,8 +7,6 @@ import selenium.webdriver as webdriver
 from datetime import date
 from retriever.models import Match
 
-
-IANS = "https://www.snai.it/sport"
 ORIGIN = "ians"
 
 
@@ -80,9 +78,7 @@ def parse_tr_element(element):
         match.save()
 
 
-def retrieveIdata():
-    url = IANS
-
+def retrieveIdata(url):
     driver = webdriver.Firefox()
     driver.get(url)
     html = driver.page_source

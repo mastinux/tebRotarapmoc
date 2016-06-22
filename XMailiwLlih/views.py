@@ -4,7 +4,6 @@ from io import StringIO
 from datetime import date
 from retriever.models import Match
 
-MAILLIW_LLIH = "http://sports.williamhill.it/bet_ita/it/betting/t/9392/Euro+2016.html"
 ORIGIN = "mailliwLlih"
 
 months = dict()
@@ -65,8 +64,8 @@ def parse_teams(home_vs_visitor):
     return home, visitor
 
 
-def retrieveMLdata():
-    req = Request(MAILLIW_LLIH)
+def retrieveMLdata(url):
+    req = Request(url)
     response = urlopen(req)
     encoding = response.headers.getparam('charset')
     html = response.read().decode(encoding)

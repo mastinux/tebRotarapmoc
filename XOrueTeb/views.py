@@ -5,18 +5,6 @@ import selenium.webdriver as webdriver
 from datetime import date
 from retriever.models import Match
 
-ORUE_TEB = "http://web.eurobet.it/webeb/scommesse-sportive?action=showMeeting" \
-           "&disciplineCode=1" \
-           "&meetingCode=42" \
-           "&betTypesParam=-1" \
-           "&betTypeGroupSel=-1" \
-           "&showSplash=0" \
-           "&partid=nuFYWiDMdCzhFJ7n09KR-WNd7ZgqdRLk" \
-           "&maagid=122" \
-           "&amc_cid=ps_Adwords_Europei2016_Scommesse_null" \
-           "&url=http://web.eurobet.it/webeb/scommesse-sportive%3Faction%3DshowMeeting%26disciplineCode%3D1%26meetingCode%3D42%26betTypesParam%3D-1%26betTypeGroupSel%3D-1%26showSplash%3D0" \
-           "&payload=%2Bscommesse%20%2Beuropei_b_100087147477_c" \
-           "&gclid=CIDAho7utM0CFcWVGwod-9wILQ"
 ORIGIN = "orueTeb"
 
 
@@ -78,9 +66,7 @@ def parse_div_element(element):
         match.save()
 
 
-def retrieveOdata():
-    url = ORUE_TEB
-
+def retrieveOdata(url):
     driver = webdriver.Firefox()
     driver.get(url)
     html = driver.page_source

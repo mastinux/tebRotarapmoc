@@ -5,7 +5,6 @@ from selenium import webdriver
 from retriever.models import Match
 from datetime import date
 
-RETTEB = "https://www.lottomatica.it/scommesse/avvenimenti/calcio/europa/campeuropei.html"
 ORIGIN = "retteb"
 
 
@@ -70,9 +69,7 @@ def parse_tr_element(element):
                 visitor_wins = None
 
 
-def retrieveMLdata():
-    url = RETTEB
-
+def retrieveRdata(url):
     driver = webdriver.Firefox()
     driver.get(url)
     html = driver.page_source

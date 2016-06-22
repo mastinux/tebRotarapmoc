@@ -8,6 +8,7 @@ from XRetteb import views as Rviews
 from XTebCilc import views as Tviews
 from retriever.models import Match
 from datetime import datetime
+import etis
 
 PAYMENT = 100
 
@@ -24,20 +25,20 @@ def refresh_data():
     for m in Match.objects.all():
         Match.delete(m)
 
-    Iviews.retrieveIdata()
-    Lviews.retrieveLdata()
-    MLviews.retrieveMLdata()
-    OTviews.retrieveOdata()
-    Rviews.retrieveMLdata()
-    Tviews.retrieveTCdata()
-    #YRviews.retrieveYRdata()
+    Iviews.retrieveIdata(etis.IANS)
+    Lviews.retrieveLdata(etis.LASIS)
+    MLviews.retrieveMLdata(etis.MAILLIW_LLIH)
+    OTviews.retrieveOdata(etis.ORUE_TEB)
+    Rviews.retrieveRdata(etis.RETTEB)
+    Tviews.retrieveTCdata(etis.TEB_CILC)
+    #YRviews.retrieveYRdata(etis.YDDAP_REWOP)
 
 
 def index(request):
     context = {}
     data = list()
 
-    #refresh_data()
+    refresh_data()
 
     matches = Match.objects.all()
 

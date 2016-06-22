@@ -5,8 +5,6 @@ import selenium.webdriver as webdriver
 from retriever.models import Match
 from datetime import date
 
-LASIS = "http://www.sisal.it/scommesse/calcio/europei-2016"
-PDF_LASIS = "http://landing.sisal.it/volantini/Scommesse_Sport/Quote/calcio%20base%20per%20data.pdf"
 ORIGIN = "lasis"
 
 
@@ -91,7 +89,7 @@ def parse_div_element(element):
         match.save()
 
 
-def retrieveLdata():
+def retrieveLdata(url):
     """
     PDF_NAME = "document.pdf"
 
@@ -100,8 +98,6 @@ def retrieveLdata():
     f.write(response.read())
     f.close()
     """
-
-    url = LASIS
 
     driver = webdriver.Firefox()
     driver.get(url)
