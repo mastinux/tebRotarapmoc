@@ -51,9 +51,6 @@ def parse_tr_element(element):
         else:
             visitor_wins = td_element.text.replace(" ", "").replace("\n", "").replace(",", ".")
 
-    #print home, visitor
-    #print home_wins, draw, visitor_wins
-
     match = Match()
     match.origin = ORIGIN
     match.datetime = date(2016, 6, 1)
@@ -83,12 +80,6 @@ def retrieveIdata(url):
     driver.get(url)
     html = driver.page_source
     driver.quit()
-
-    """
-    f = open("page.html", "w")
-    f.write(html)
-    f.close()
-    """
 
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO(html), parser)

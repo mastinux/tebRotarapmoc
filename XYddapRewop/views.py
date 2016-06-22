@@ -31,43 +31,39 @@ def parse_teams(home_vs_visitor):
 
 def parse_td_elements(elements):
     home = None
-    home_price = None
+    home_wins = None
+    draw_name = None
     draw = None
-    draw_price = None
     visitor = None
-    visitor_price = None
+    visitor_wins = None
 
     for e in elements:
         e.tag
         if e.attrib['class'] == "team":
             if not home:
                 home = e.text
-            elif not draw:
-                draw = e.text
+            elif not draw_name:
+                draw_name = e.text
             else:
                 visitor = e.text
         elif e.attrib['class'] == "price":
             for c in e.getiterator():
                 if c.tag == "a":
-                    if not home_price:
-                        home_price = c.text
-                    elif not draw_price:
-                        draw_price = c.text
+                    if not home_wins:
+                        home_wins = c.text
+                    elif not draw:
+                        draw = c.text
                     else:
-                        visitor_price = c.text
-
-    #print draw, draw_price
-    #print home, home_price
-    #print visitor, visitor_price
+                        visitor_wins = c.text
 
     match = Match()
     match.origin = ORIGIN
     match.datetime = date(2016, 6, 1)
     match.home = home[:-1].replace(" ", "").lower().capitalize()
     match.visitor = visitor[:-1].replace(" ", "").lower().capitalize()
-    match.price_1 = float(home_price)
-    match.price_x = float(draw_price)
-    match.price_2 = float(visitor_price)
+    match.price_1 = float(home_wins)
+    match.price_x = float(draw)
+    match.price_2 = float(visitor_wins)
 
     tmp = match.is_stored()
     if tmp:
@@ -114,7 +110,6 @@ def retrieveYRdata(url):
     new_elements = list()
 
     for table_element in elements:
-        #print "---", table_element.tag, table_element.attrib
         for element in table_element.getiterator():
             if element.tag == "td":
                 new_elements.append(element)

@@ -90,25 +90,11 @@ def parse_div_element(element):
 
 
 def retrieveLdata(url):
-    """
-    PDF_NAME = "document.pdf"
-
-    response = urlopen(PDF_LASIS)
-    f = open(PDF_NAME, 'w')
-    f.write(response.read())
-    f.close()
-    """
 
     driver = webdriver.Firefox()
     driver.get(url)
     html = driver.page_source
     driver.quit()
-
-    """
-    f = open("page.html", "w")
-    f.write(html)
-    f.close()
-    """
 
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO(html), parser)

@@ -6,14 +6,16 @@ from XLasis import views as Lviews
 from XOrueTeb import views as OTviews
 from XRetteb import views as Rviews
 from XTebCilc import views as Tviews
+from XAzzagTeb import views as Aviews
+from XNiwb import views as Nviews
 from retriever.models import Match
 from datetime import datetime
 import etis
 
-PAYMENT = 100
+PAYMENT = 25
 
 
-def present(datum, data):
+def is_present(datum, data):
     for d in data:
         if d["home"] == datum["home"] and d["visitor"] == datum["visitor"] and d["datetime"] == datum["datetime"]:
             return True
@@ -25,20 +27,19 @@ def refresh_data():
     for m in Match.objects.all():
         Match.delete(m)
 
+    Aviews.retrieveATdata(etis.AZZAG_TEB)
     Iviews.retrieveIdata(etis.IANS)
     Lviews.retrieveLdata(etis.LASIS)
     MLviews.retrieveMLdata(etis.MAILLIW_LLIH)
+    Nviews.retrieveNdata(etis.NIWB)
     OTviews.retrieveOdata(etis.ORUE_TEB)
     Rviews.retrieveRdata(etis.RETTEB)
     Tviews.retrieveTCdata(etis.TEB_CILC)
-    #YRviews.retrieveYRdata(etis.YDDAP_REWOP)
+    YRviews.retrieveYRdata(etis.YDDAP_REWOP)
 
 
-def index(request):
-    context = {}
+def present_data():
     data = list()
-
-    refresh_data()
 
     matches = Match.objects.all()
 
@@ -77,13 +78,16 @@ def index(request):
                      'max_1': max_1, 'max_x': max_x, 'max_2': max_2, 'match_1_max': match_1_max,
                      'match_x_max': match_x_max, 'match_2_max': match_2_max, 'cost_1': cost_1, 'cost_x': cost_x,
                      'cost_2': cost_2, 'total_cost': total_cost}
-            if not present(datum, data):
+            if not is_present(datum, data):
                 data.append(datum)
 
     sorted_data = sorted(data, key=lambda k: k['total_cost'])
-    context['data'] = sorted_data
 
-    context['payment'] = PAYMENT
+    return sorted_data
+
+
+def index(request):
+    context = {'data': present_data(), 'payment': PAYMENT}
 
     return render(request, 'index.html', context)
 
@@ -91,11 +95,20 @@ def index(request):
 def index_2(request):
     context = {}
 
-    matches = Match.objects.all().order_by("home", "visitor")
-    context["matches"] = matches
+    refresh_data()
 
-    return render(request, 'index_2.html', context)
+    context['data'] = present_data()
+
+    context['payment'] = PAYMENT
+
+    return render(request, 'index.html', context)
 
 
 def index_3(request):
-    return render(request, 'index_3.html')
+    context = {}
+
+    matches = Match.objects.all().order_by("home", "visitor")
+
+    context["matches"] = matches
+
+    return render(request, 'index_2.html', context)
