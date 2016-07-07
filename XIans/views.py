@@ -6,6 +6,7 @@ from webbrowser import open as webbrowser_open
 import selenium.webdriver as webdriver
 from datetime import date
 from retriever.models import Match
+from pyvirtualdisplay import Display
 
 ORIGIN = "ians"
 
@@ -24,14 +25,6 @@ def parse_teams(element):
         if visitor == "NIrlanda":
             visitor = "Irlandadelnord"
         return home.lower().capitalize(), visitor.lower().capitalize()
-
-
-def retrieveHtml():
-    req = Request(IANS)
-    response = urlopen(req)
-    html = response.read()
-
-    return html
 
 
 def parse_tr_element(element):
@@ -76,11 +69,19 @@ def parse_tr_element(element):
 
 
 def retrieveIdata(url):
+    display = Display(visible=0, size=(1024, 1024))
+    display.start()
+
     driver = webdriver.Firefox()
     driver.get(url)
     html = driver.page_source
     driver.quit()
 
+    display.stop()
+
+    print html
+
+    """
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO(html), parser)
 
@@ -93,3 +94,4 @@ def retrieveIdata(url):
     for tr_element in my_div.getiterator("tr"):
         if "class" in tr_element.keys():
             parse_tr_element(tr_element)
+    """

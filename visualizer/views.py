@@ -12,7 +12,7 @@ from retriever.models import Match
 from datetime import datetime
 import etis
 
-PAYMENT = 25
+PAYMENT = 100
 
 
 def is_present(datum, data):
@@ -28,12 +28,12 @@ def refresh_data():
         Match.delete(m)
 
     Aviews.retrieveATdata(etis.AZZAG_TEB)
-    Iviews.retrieveIdata(etis.IANS)
-    Lviews.retrieveLdata(etis.LASIS)
+    #Iviews.retrieveIdata(etis.IANS)
+    #Lviews.retrieveLdata(etis.LASIS)
     MLviews.retrieveMLdata(etis.MAILLIW_LLIH)
     Nviews.retrieveNdata(etis.NIWB)
-    OTviews.retrieveOdata(etis.ORUE_TEB)
-    Rviews.retrieveRdata(etis.RETTEB)
+    #OTviews.retrieveOdata(etis.ORUE_TEB)
+    #Rviews.retrieveRdata(etis.RETTEB)
     Tviews.retrieveTCdata(etis.TEB_CILC)
     YRviews.retrieveYRdata(etis.YDDAP_REWOP)
 

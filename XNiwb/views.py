@@ -13,7 +13,7 @@ def parse_td_element(element):
 
     for span_element in element.getiterator("span"):
         if "class" in span_element.keys() and span_element.attrib["class"] == "option-name":
-            a = span_element.text
+            a = span_element.text.replace(" ", "")
         if "class" in span_element.keys() and span_element.attrib["class"] == "odds":
             b = span_element.text
 
