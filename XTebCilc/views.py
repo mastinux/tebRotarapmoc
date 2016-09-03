@@ -6,6 +6,8 @@ from retriever.models import Match
 
 ORIGIN = "tebCilc"
 
+# CHECKED
+
 
 def parse_first_element(element):
     for a_element in element.getiterator("a"):

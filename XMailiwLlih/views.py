@@ -4,6 +4,8 @@ from io import StringIO
 from datetime import date
 from retriever.models import Match
 
+# CHECKED
+
 ORIGIN = "mailliwLlih"
 
 months = dict()
@@ -129,6 +131,7 @@ def retrieveMLdata(url):
 
                 #print match_datetime, "\n", home_ok, "-", visitor_ok, \
                 #    "\t[", home_wins_ok, "/", draw_ok, "/", visitor_wins_ok, "]"
+
                 match = Match()
                 match.origin = ORIGIN
                 match.datetime = match_datetime

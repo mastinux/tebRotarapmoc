@@ -1,13 +1,15 @@
 from django.shortcuts import render
+from XAzzagTeb import views as Aviews
 from XMailiwLlih import views as MLviews
+from XTebCilc import views as Tviews
+from XLasis import views as Lviews
+"""
 from XYddapRewop import views as YRviews
 from XIans import views as Iviews
-from XLasis import views as Lviews
 from XOrueTeb import views as OTviews
 from XRetteb import views as Rviews
-from XTebCilc import views as Tviews
-from XAzzagTeb import views as Aviews
 from XNiwb import views as Nviews
+"""
 from retriever.models import Match
 from datetime import datetime
 import etis
@@ -28,14 +30,14 @@ def refresh_data():
         Match.delete(m)
 
     Aviews.retrieveATdata(etis.AZZAG_TEB)
-    #Iviews.retrieveIdata(etis.IANS)
-    #Lviews.retrieveLdata(etis.LASIS)
+    Lviews.retrieveLdata(etis.LASIS)
     MLviews.retrieveMLdata(etis.MAILLIW_LLIH)
-    Nviews.retrieveNdata(etis.NIWB)
+    Tviews.retrieveTCdata(etis.TEB_CILC)
+    #Iviews.retrieveIdata(etis.IANS)
+    #Nviews.retrieveNdata(etis.NIWB)
     #OTviews.retrieveOdata(etis.ORUE_TEB)
     #Rviews.retrieveRdata(etis.RETTEB)
-    Tviews.retrieveTCdata(etis.TEB_CILC)
-    YRviews.retrieveYRdata(etis.YDDAP_REWOP)
+    #YRviews.retrieveYRdata(etis.YDDAP_REWOP)
 
 
 def present_data():

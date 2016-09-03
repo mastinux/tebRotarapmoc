@@ -2,7 +2,7 @@ from datetime import date
 from io import StringIO
 from lxml import etree
 from urllib2 import Request, urlopen
-from retriever.models import Match
+#from retriever.models import Match
 
 ORIGIN = "yddapRewop"
 
@@ -56,6 +56,10 @@ def parse_td_elements(elements):
                     else:
                         visitor_wins = c.text
 
+    print home, home_wins
+    print draw
+    print visitor, visitor_wins
+    """
     match = Match()
     match.origin = ORIGIN
     match.datetime = date(2016, 6, 1)
@@ -78,6 +82,7 @@ def parse_td_elements(elements):
     else:
         print "saving", match
         match.save()
+    """
 
 
 def retrieveYRdata(url):

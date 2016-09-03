@@ -4,6 +4,8 @@ from io import StringIO
 from datetime import date
 from retriever.models import Match
 
+# CHECKED
+
 ORIGIN = "azzagTeb"
 
 
@@ -74,6 +76,3 @@ def retrieveATdata(url):
     for tr_element in tree.getiterator("tr"):
         if "class" in tr_element.keys() and "mkt" in tr_element.attrib["class"]:
             parse_tr_element(tr_element)
-
-
-retrieveATdata("")

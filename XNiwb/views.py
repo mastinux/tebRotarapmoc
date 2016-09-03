@@ -2,7 +2,7 @@ from urllib2 import urlopen, Request
 from lxml import etree
 from io import StringIO
 from datetime import date
-from retriever.models import Match
+#from retriever.models import Match
 
 ORIGIN = "niwb"
 
@@ -35,6 +35,9 @@ def parse_tr_element(element):
         elif not visitor:
             visitor, visitor_wins = parse_td_element(td_element)
 
+            print home, visitor
+            print home_wins, draw, visitor_wins
+            """
             match = Match()
             match.origin = ORIGIN
             match.datetime = date(2016, 6, 1)
@@ -57,7 +60,7 @@ def parse_tr_element(element):
             else:
                 print "saving", match
                 match.save()
-
+            """
             home = None
             visitor = None
             home_wins = None
