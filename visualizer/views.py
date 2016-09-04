@@ -3,8 +3,8 @@ from XAzzagTeb import views as Aviews
 from XMailiwLlih import views as MLviews
 from XTebCilc import views as Tviews
 from XLasis import views as Lviews
-"""
 from XYddapRewop import views as YRviews
+"""
 from XIans import views as Iviews
 from XOrueTeb import views as OTviews
 from XRetteb import views as Rviews
@@ -33,11 +33,11 @@ def refresh_data():
     Lviews.retrieveLdata(etis.LASIS)
     MLviews.retrieveMLdata(etis.MAILLIW_LLIH)
     Tviews.retrieveTCdata(etis.TEB_CILC)
+    YRviews.retrieveYRdata(etis.YDDAP_REWOP)
     #Iviews.retrieveIdata(etis.IANS)
     #Nviews.retrieveNdata(etis.NIWB)
     #OTviews.retrieveOdata(etis.ORUE_TEB)
     #Rviews.retrieveRdata(etis.RETTEB)
-    #YRviews.retrieveYRdata(etis.YDDAP_REWOP)
 
 
 def present_data():
