@@ -1,4 +1,3 @@
-from urllib2 import urlopen, Request
 from lxml import etree
 from io import StringIO
 import selenium.webdriver as webdriver

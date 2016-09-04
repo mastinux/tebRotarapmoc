@@ -1,14 +1,13 @@
 from datetime import date
 from io import StringIO
 from lxml import etree
-from urllib2 import Request, urlopen
 import selenium.webdriver as webdriver
 from pyvirtualdisplay import Display
 from retriever.models import Match
 
 ORIGIN = "yddapRewop"
 
-# CHECKED
+# TODO: re-check
 
 
 def parse_teams(element):
