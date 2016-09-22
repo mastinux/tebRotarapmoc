@@ -67,6 +67,7 @@ def parse_teams(home_vs_visitor):
 
 
 def retrieveMLdata(url):
+    print 'processing mailliwLlih'
     req = Request(url)
     response = urlopen(req)
     encoding = response.headers.getparam('charset')

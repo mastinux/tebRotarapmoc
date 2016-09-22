@@ -83,6 +83,7 @@ def parse_div_element(element):
 
 
 def retrieveLdata(url):
+    print 'processing lasis'
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 

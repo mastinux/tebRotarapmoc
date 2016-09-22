@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from XAzzagTeb import views as ATviews
+from XIans import views as Iviews
 from XMailiwLlih import views as MLviews
 from XLasis import views as Lviews
 from XYddapRewop import views as YRviews
@@ -8,13 +9,13 @@ from XTebCilc import views as TCviews
 from XTenTeb import views as TTviews
 from XTebRiaf import views as TRviews
 """
-from XIans import views as Iviews
 from XOrueTeb import views as OTviews
 from XNiwb import views as Nviews
 """
 from retriever.models import Match
 from datetime import datetime
-import etis
+from time import sleep
+from . import etis
 
 PAYMENT = 100
 
@@ -32,14 +33,20 @@ def refresh_data():
         Match.delete(m)
 
     ATviews.retrieveATdata(etis.AZZAG_TEB)
+    sleep(1)
+    Iviews.retrieveIdata(etis.IANS)
+    sleep(1)
     Lviews.retrieveLdata(etis.LASIS)
+    sleep(1)
     MLviews.retrieveMLdata(etis.MAILLIW_LLIH)
+    sleep(1)
     Rviews.retrieveRdata(etis.RETTEB)
+    sleep(1)
     TCviews.retrieveTCdata(etis.TEB_CILC)
+    sleep(1)
     TRviews.retrieveTRdata(etis.TEB_RIAF)
     #TTviews.retrieveTTdata(etis.TEN_TEB)
     #YRviews.retrieveYRdata(etis.YDDAP_REWOP)
-    #Iviews.retrieveIdata(etis.IANS)
     #Nviews.retrieveNdata(etis.NIWB)
     #OTviews.retrieveOdata(etis.ORUE_TEB)
 

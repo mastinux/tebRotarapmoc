@@ -8,6 +8,8 @@ from datetime import date
 from retriever.models import Match
 from pyvirtualdisplay import Display
 
+# CHECKED
+
 ORIGIN = "ians"
 
 
@@ -15,15 +17,16 @@ def parse_datetime(formatted_date, formatted_time):
     print formatted_date, formatted_time
 
 
+def parse_td_element(element):
+    for span_element in element.getiterator("span"):
+        return span_element.text.replace(" ", "").replace("\n", "").replace(",", ".")
+
+
 def parse_teams(element):
     for a_element in element.getiterator("a"):
         teams = (a_element.text).replace(" ", "").replace("\n", "").split("-")
         home = teams[0]
-        if home == "NIrlanda":
-            home = "Irlandadelnord"
         visitor = teams[1]
-        if visitor == "NIrlanda":
-            visitor = "Irlandadelnord"
         return home.lower().capitalize(), visitor.lower().capitalize()
 
 
@@ -38,11 +41,11 @@ def parse_tr_element(element):
         if not home:
             home, visitor = parse_teams(td_element)
         elif not home_wins:
-            home_wins = td_element.text.replace(" ", "").replace("\n", "").replace(",", ".")
+            home_wins = parse_td_element(td_element)
         elif not draw:
-            draw = td_element.text.replace(" ", "").replace("\n", "").replace(",", ".")
-        else:
-            visitor_wins = td_element.text.replace(" ", "").replace("\n", "").replace(",", ".")
+            draw = parse_td_element(td_element)
+        elif not visitor_wins:
+            visitor_wins = parse_td_element(td_element)
 
     match = Match()
     match.origin = ORIGIN
@@ -68,7 +71,14 @@ def parse_tr_element(element):
         match.save()
 
 
+def parse_tbody_element(tbody_element):
+    for tr_element in tbody_element.getiterator("tr"):
+        parse_tr_element(tr_element)
+
+
 def retrieveIdata(url):
+    print "processing ians"
+
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 
@@ -79,19 +89,8 @@ def retrieveIdata(url):
 
     display.stop()
 
-    print html
-
-    """
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO(html), parser)
 
-    for div_element in tree.getiterator("div"):
-        if "id" in div_element.keys() and div_element.attrib["id"] == "piuGiocate_CALCIO":
-            my_div = div_element
-            tree = None
-            break
-
-    for tr_element in my_div.getiterator("tr"):
-        if "class" in tr_element.keys():
-            parse_tr_element(tr_element)
-    """
+    for tbody_element in tree.getiterator("tbody"):
+        parse_tbody_element(tbody_element)

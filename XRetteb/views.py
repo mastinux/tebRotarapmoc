@@ -70,6 +70,7 @@ def parse_tr_element(element):
 
 
 def retrieveRdata(url):
+    print 'processing retteb'
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 
