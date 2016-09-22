@@ -6,7 +6,7 @@ from retriever.models import Match
 
 # CHECKED
 
-ORIGIN = "mailliwLlih"
+ORIGIN = "MailliwLlih"
 
 months = dict()
 months["Gen"] = 1

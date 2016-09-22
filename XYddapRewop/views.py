@@ -5,7 +5,7 @@ import selenium.webdriver as webdriver
 from pyvirtualdisplay import Display
 from retriever.models import Match
 
-ORIGIN = "yddapRewop"
+ORIGIN = "YddapRewop"
 
 # TODO: re-check
 

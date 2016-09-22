@@ -10,7 +10,7 @@ from pyvirtualdisplay import Display
 
 # CHECKED
 
-ORIGIN = "ians"
+ORIGIN = "Ians"
 
 
 def parse_datetime(formatted_date, formatted_time):

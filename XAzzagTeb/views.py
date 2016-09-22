@@ -6,7 +6,7 @@ from retriever.models import Match
 
 # CHECKED
 
-ORIGIN = "azzagTeb"
+ORIGIN = "AzzagTeb"
 
 
 def parse_td_element(element):

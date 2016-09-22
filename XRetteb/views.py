@@ -5,7 +5,7 @@ from pyvirtualdisplay import Display
 from retriever.models import Match
 from datetime import date
 
-ORIGIN = "retteb"
+ORIGIN = "Retteb"
 
 
 def parse_teams(element):

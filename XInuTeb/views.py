@@ -8,6 +8,8 @@ from pyvirtualdisplay import Display
 
 
 def retrieveITdata(url):
+    print "processing inuTeb"
+
     display = Display(visible=0, size=(1024, 1024))
     display.start()
     driver = webdriver.Firefox()

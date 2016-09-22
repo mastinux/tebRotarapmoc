@@ -5,7 +5,7 @@ import selenium.webdriver as webdriver
 from datetime import date
 from retriever.models import Match
 
-ORIGIN = "orueTeb"
+ORIGIN = "OrueTeb"
 
 
 def parse_first_element(element):
