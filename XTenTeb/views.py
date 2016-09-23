@@ -5,9 +5,9 @@ import selenium.webdriver as webdriver
 from pyvirtualdisplay import Display
 from retriever.models import Match
 
-ORIGIN = "TenTeb"
+# CHECKED
 
-# TODO: re-check
+ORIGIN = "TenTeb"
 
 
 def parse_div_element(element):
@@ -60,6 +60,8 @@ def parse_div_element(element):
 
 
 def retrieveTTdata(url):
+    print "processing tenTeb ..."
+
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 

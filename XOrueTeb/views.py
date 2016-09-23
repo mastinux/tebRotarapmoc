@@ -69,7 +69,7 @@ def parse_div_element(element):
 
 
 def retrieveOdata(url):
-    print "processing orueTeb"
+    print "processing orueTeb ..."
 
     display = Display(visible=0, size=(1024, 1024))
     display.start()

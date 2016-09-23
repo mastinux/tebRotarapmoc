@@ -66,6 +66,7 @@ def parse_tr_element(element):
 
 def retrieveATdata(url):
     print 'processing azzagTeb'
+
     req = Request(url)
     response = urlopen(req)
     encoding = response.headers.getparam('charset')

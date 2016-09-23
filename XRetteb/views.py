@@ -2,8 +2,10 @@ from lxml import etree
 from io import StringIO
 from selenium import webdriver
 from pyvirtualdisplay import Display
-from retriever.models import Match
 from datetime import date
+from retriever.models import Match
+
+# CHECKED
 
 ORIGIN = "Retteb"
 
@@ -41,6 +43,8 @@ def parse_tr_element(element):
             elif not visitor_wins:
                 visitor_wins = parse_second(td_element)
 
+                #print home, visitor, home_wins, draw, visitor_wins
+
                 match = Match()
                 match.origin = ORIGIN
                 match.datetime = date(2016, 6, 1)
@@ -70,7 +74,8 @@ def parse_tr_element(element):
 
 
 def retrieveRdata(url):
-    print 'processing retteb'
+    print 'processing retteb ...'
+
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 
@@ -85,6 +90,5 @@ def retrieveRdata(url):
     tree = etree.parse(StringIO(html), parser)
 
     for element in tree.getiterator("tr"):
-        if "class" in element.keys() and element.attrib["class"] == "ng-scope"\
-                and "ng-repeat" in element.keys() and "eventM" in element.attrib["ng-repeat"]:
+        if "ng-repeat" in element.keys() and "eventM" in element.attrib["ng-repeat"]:
             parse_tr_element(element)

@@ -103,7 +103,7 @@
                   <th>price 1 | charge 1</th>
                   <th>price x | charge x</th>
                   <th>price 2 | charge 2</th>
-                  <th>total charge</th>
+                  <th>partial gain</th>
               </tr>
           </thead>
           <tbody>
@@ -159,13 +159,33 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if datum.total_cost < payment %}
-                            <span class="label label-success">
-                        {% else %}
-                            <span class="label label-danger">
+                        {% if forloop.counter0 == datum.match_1_max %}
+                            {% if datum.gain_1 > payment %}
+                                <span class="label label-success">
+                            {% else %}
+                                <span class="label label-warning">
+                            {% endif %}
+                                    {{ datum.gain_1 |floatformat:2 }}
+                                </span>
                         {% endif %}
-                                {{ datum.total_cost|floatformat:2 }}
-                            </span>
+                        {% if forloop.counter0 == datum.match_x_max %}
+                            {% if datum.gain_x > payment %}
+                                <span class="label label-success">
+                            {% else %}
+                                <span class="label label-warning">
+                            {% endif %}
+                                    {{ datum.gain_x |floatformat:2 }}
+                                </span>
+                        {% endif %}
+                        {% if forloop.counter0 == datum.match_2_max %}
+                            {% if datum.gain_2 > payment %}
+                                <span class="label label-success">
+                            {% else %}
+                                <span class="label label-warning">
+                            {% endif %}
+                                    {{ datum.gain_2 |floatformat:2 }}
+                                </span>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

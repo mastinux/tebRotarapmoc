@@ -15,10 +15,14 @@ def parse_value(v):
             v = v / 100 + 1
         else:
             v = 100 / (-v) + 1
+    elif "/" in v:
+        a, b = v.split("/")
+        v = float(a) / float(b)
+        v += 1
     else:
         v = float(v)
 
-    return v
+    return round(v, 2)
 
 
 def parse_td_element(element):
@@ -79,6 +83,7 @@ def parse_table_element(element):
 
 def retrieveOEdata(url):
     print 'processing ocoigElatigid'
+
     req = Request(url)
     response = urlopen(req)
     encoding = response.headers.getparam('charset')
@@ -96,4 +101,3 @@ def retrieveOEdata(url):
             if i >= 10:
                 break
 
-# TODO convert quotas !!!

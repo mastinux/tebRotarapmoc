@@ -59,7 +59,8 @@ def parse_div_element(element):
 
 
 def retrieveNdata(url):
-    print "processing niwb"
+    print "processing niwb ..."
+
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 

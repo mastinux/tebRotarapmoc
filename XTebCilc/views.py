@@ -65,6 +65,7 @@ def parse_div_element(element):
 
 def retrieveTCdata(url):
     print 'processing tebCilc'
+
     req = Request(url)
     response = urlopen(req)
     encoding = response.headers.getparam('charset')

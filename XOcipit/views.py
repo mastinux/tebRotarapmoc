@@ -9,6 +9,15 @@ from retriever.models import Match
 ORIGIN = "Ocipit"
 
 
+def purge_str(string):
+    if string == "Chievo verona":
+        return "Chievo"
+    elif string == "Fc crotone":
+        return "Crotone"
+    else:
+        return string
+
+
 def parse_div_element(element):
     home = None
     visitor = None
@@ -37,8 +46,8 @@ def parse_div_element(element):
     match = Match()
     match.origin = ORIGIN
     match.datetime = match_datetime
-    match.home = home.lower().capitalize()
-    match.visitor = visitor.lower().capitalize()
+    match.home = purge_str(home.lower().capitalize())
+    match.visitor = purge_str(visitor.lower().capitalize())
     match.price_1 = float(home_wins)
     match.price_x = float(draw)
     match.price_2 = float(visitor_wins)
@@ -60,6 +69,7 @@ def parse_div_element(element):
 
 def retrieveOdata(url):
     print 'processing ocipit'
+
     req = Request(url)
     response = urlopen(req)
     encoding = response.headers.getparam('charset')

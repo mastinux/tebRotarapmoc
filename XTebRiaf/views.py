@@ -66,6 +66,7 @@ def parse_li_element(element):
 
 def retrieveTRdata(url):
     print 'processing TebRiaf'
+
     req = Request(url)
     response = urlopen(req)
     encoding = response.headers.getparam('charset')

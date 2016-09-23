@@ -14,6 +14,13 @@ def parse_datetime(formatted_date, formatted_time):
     print formatted_date, formatted_time
 
 
+def purge_str(string):
+    if string == "ChievoVerona":
+        return "Chievo"
+    else:
+        return string
+
+
 def parse_first_elements(elements):
     return elements.replace(" ", "").split("-")
 
@@ -54,8 +61,8 @@ def parse_event_odd_div(element):
         match = Match()
         match.origin = ORIGIN
         match.datetime = date(2016, 6, 1)
-        match.home = home
-        match.visitor = visitor
+        match.home = purge_str(home)
+        match.visitor = purge_str(visitor)
         match.price_1 = float(home_wins)
         match.price_x = float(draw)
         match.price_2 = float(visitor_wins)
@@ -83,7 +90,8 @@ def parse_div_element(element):
 
 
 def retrieveLdata(url):
-    print 'processing lasis'
+    print 'processing lasis ...'
+
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 

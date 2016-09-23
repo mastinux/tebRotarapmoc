@@ -2,6 +2,7 @@ from django.shortcuts import render
 from retriever.models import Match
 from datetime import datetime
 from time import sleep
+from math import ceil
 from . import etis
 
 from XAzzagTeb import views as ATviews
@@ -35,27 +36,30 @@ def refresh_data():
     for m in Match.objects.all():
         Match.delete(m)
 
+    sleep(3)
+    Rviews.retrieveRdata(etis.RETTEB)
+    sleep(1)
     ATviews.retrieveATdata(etis.AZZAG_TEB)
-    sleep(1)
+    sleep(3)
     Iviews.retrieveIdata(etis.IANS)
-    sleep(1)
+    sleep(3)
     Lviews.retrieveLdata(etis.LASIS)
     sleep(1)
     MLviews.retrieveMLdata(etis.MAILLIW_LLIH)
-    sleep(1)
+    sleep(3)
     Nviews.retrieveNdata(etis.NIWB)
     sleep(1)
     Oviews.retrieveOdata(etis.OCIPIT)
     sleep(1)
     OEviews.retrieveOEdata(etis.OCOIG_ELATIGID)
     sleep(1)
-    #Rviews.retrieveRdata(etis.RETTEB)
-    sleep(1)
     TCviews.retrieveTCdata(etis.TEB_CILC)
     sleep(1)
     TRviews.retrieveTRdata(etis.TEB_RIAF)
-    #TTviews.retrieveTTdata(etis.TEN_TEB)
-    #YRviews.retrieveYRdata(etis.YDDAP_REWOP)
+    sleep(3)
+    TTviews.retrieveTTdata(etis.TEN_TEB)
+    sleep(3)
+    YRviews.retrieveYRdata(etis.YDDAP_REWOP)
     #OTviews.retrieveOdata(etis.ORUE_TEB)
 
 
@@ -91,18 +95,28 @@ def present_data():
                     match_2_max = idx
 
             cost_1 = PAYMENT / max_1
+            cost_1 = ceil(cost_1)
             cost_x = PAYMENT / max_x
+            cost_x = ceil(cost_x)
             cost_2 = PAYMENT / max_2
+            cost_2 = ceil(cost_2)
             total_cost = cost_1 + cost_x + cost_2
+
+            gain_1 = max_1 * cost_1
+            gain_x = max_x * cost_x
+            gain_2 = max_2 * cost_2
+
+            min_gain = min([gain_1, gain_x, gain_2])
 
             datum = {'home': home, 'visitor': visitor, 'datetime': datetime.now(), 'matches': local,
                      'max_1': max_1, 'max_x': max_x, 'max_2': max_2, 'match_1_max': match_1_max,
                      'match_x_max': match_x_max, 'match_2_max': match_2_max, 'cost_1': cost_1, 'cost_x': cost_x,
-                     'cost_2': cost_2, 'total_cost': total_cost}
+                     'cost_2': cost_2, 'gain_1': gain_1, 'gain_x': gain_x, 'gain_2': gain_2, 'min_gain': min_gain,
+                     'total_cost': total_cost}
             if not is_present(datum, data):
                 data.append(datum)
 
-    sorted_data = sorted(data, key=lambda k: k['total_cost'])
+    sorted_data = reversed(sorted(data, key=lambda k: k['min_gain']))
 
     return sorted_data
 

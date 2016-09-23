@@ -5,9 +5,9 @@ import selenium.webdriver as webdriver
 from pyvirtualdisplay import Display
 from retriever.models import Match
 
-ORIGIN = "YddapRewop"
+# CHECKED
 
-# TODO: re-check
+ORIGIN = "YddapRewop"
 
 
 def parse_teams(element):
@@ -76,6 +76,8 @@ def parse_table_element(element):
 
 
 def retrieveYRdata(url):
+    print "processing yddapRewp ..."
+
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 

@@ -77,7 +77,7 @@ def parse_tbody_element(tbody_element):
 
 
 def retrieveIdata(url):
-    print "processing ians"
+    print "processing ians ..."
 
     display = Display(visible=0, size=(1024, 1024))
     display.start()
