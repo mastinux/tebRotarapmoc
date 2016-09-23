@@ -10,6 +10,7 @@ from XLasis import views as Lviews
 from XMailiwLlih import views as MLviews
 from XNiwb import views as Nviews
 from XOcipit import views as Oviews
+from XOcoigElatigid import views as OEviews
 from XRetteb import views as Rviews
 from XTebCilc import views as TCviews
 from XTebRiaf import views as TRviews
@@ -46,7 +47,9 @@ def refresh_data():
     sleep(1)
     Oviews.retrieveOdata(etis.OCIPIT)
     sleep(1)
-    Rviews.retrieveRdata(etis.RETTEB)
+    OEviews.retrieveOEdata(etis.OCOIG_ELATIGID)
+    sleep(1)
+    #Rviews.retrieveRdata(etis.RETTEB)
     sleep(1)
     TCviews.retrieveTCdata(etis.TEB_CILC)
     sleep(1)

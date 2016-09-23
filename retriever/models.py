@@ -11,8 +11,8 @@ class Match(models.Model):
     price_2 = models.FloatField()
 
     def __unicode__(self):
-        string = "[%s] \t%s-%s [%s] \t| %4.2f | %4.2f | %4.2f |" % \
-                 (self.origin, self.home, self.visitor, self.datetime, self.price_1, self.price_x, self.price_2)
+        string = "[%s] \t%s-%s \t| %4.2f | %4.2f | %4.2f |" % \
+                 (self.origin, self.home, self.visitor, self.price_1, self.price_x, self.price_2)
         return string
 
     def is_stored(self):

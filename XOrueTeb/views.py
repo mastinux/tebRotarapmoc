@@ -2,8 +2,9 @@ from urllib2 import urlopen, Request
 from lxml import etree
 from io import StringIO
 import selenium.webdriver as webdriver
+from pyvirtualdisplay import Display
 from datetime import date
-from retriever.models import Match
+#from retriever.models import Match
 
 ORIGIN = "OrueTeb"
 
@@ -41,7 +42,7 @@ def parse_div_element(element):
         if "class" in local_element.keys() and "quote" in local_element.attrib["class"]:
             home_wins, draw, visitor_wins = parse_second_element(local_element)
             break
-
+    """
     match = Match()
     match.origin = ORIGIN
     match.datetime = date(2016, 6, 1)
@@ -64,18 +65,28 @@ def parse_div_element(element):
     else:
         print "saving", match
         match.save()
+    """
 
 
 def retrieveOdata(url):
+    print "processing orueTeb"
+
+    display = Display(visible=0, size=(1024, 1024))
+    display.start()
+
     driver = webdriver.Firefox()
     driver.get(url)
     html = driver.page_source
-
     driver.quit()
+
+    display.stop()
 
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO(html), parser)
 
     for element in tree.getiterator("div"):
-        if "class" in element.keys() and element.attrib["class"] == "box_container_scommesse_evento":
-            parse_div_element(element)
+        if "class" in element.keys(): #and element.attrib["class"] == "box_container_scommesse_evento":
+            #parse_div_element(element)
+            print element.tag, element.keys()
+            print element.attrib["class"]
+            print element.attrib["id"]
