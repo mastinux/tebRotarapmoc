@@ -103,7 +103,7 @@
                   <th>price 1 | charge 1</th>
                   <th>price x | charge x</th>
                   <th>price 2 | charge 2</th>
-                  <th>partial gain</th>
+                  <th></th>
               </tr>
           </thead>
           <tbody>
@@ -115,7 +115,15 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td>
+                        {% if datum.total_cost < datum.min_gain %}
+                        <span class="label label-success">
+                        {% else %}
+                        <span class="label label-danger">
+                        {% endif %}
+                            {{ datum.total_cost }}
+                        </span>
+                    </td>
                 </tr>
             {% for record in datum.matches %}
                 <tr>
@@ -160,32 +168,20 @@
                     </td>
                     <td>
                         {% if forloop.counter0 == datum.match_1_max %}
-                            {% if datum.gain_1 > payment %}
-                                <span class="label label-success">
-                            {% else %}
-                                <span class="label label-warning">
-                            {% endif %}
+                                <span class="label label-info">
                                     {{ datum.gain_1 |floatformat:2 }}
                                 </span>
                         {% endif %}
                         {% if forloop.counter0 == datum.match_x_max %}
-                            {% if datum.gain_x > payment %}
-                                <span class="label label-success">
-                            {% else %}
-                                <span class="label label-warning">
-                            {% endif %}
+                                <span class="label label-info">
                                     {{ datum.gain_x |floatformat:2 }}
                                 </span>
                         {% endif %}
                         {% if forloop.counter0 == datum.match_2_max %}
-                            {% if datum.gain_2 > payment %}
-                                <span class="label label-success">
-                            {% else %}
-                                <span class="label label-warning">
-                            {% endif %}
+                                <span class="label label-info">
                                     {{ datum.gain_2 |floatformat:2 }}
                                 </span>
-                        {% endif %}
+                        {% endif%}
                     </td>
                 </tr>
             {% endfor %}

@@ -38,16 +38,30 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'XAgniw',
+    'XAzzagTeb',
     'XIans',
+    'XInuTeb',
+    'XLasis',
     'XMailiwLlih',
+    'XNiwb',
+    'XOOOTrops',
+    'XOcipit',
+    'XOcoigElatigid',
     'XOrueTeb',
     'XRetteb',
+    'XTebCilc',
+    'XTebRiaf',
+    'XTenTeb',
     'XYddapRewop',
+
     'visualizer',
     'retriever',
 
-    'pdfrw',
-    'execjs',
+    #'pdfrw',
+    #'execjs',
+
+    'django_crontab',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -112,3 +126,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/bower_components/"),
 )
+
+# https://pypi.python.org/pypi/django-crontab
+# python manage.py crontab add
+# python manage.py crontab show
+# python manage.py crontab remove
+CRONJOBS = [
+    ('*/15 * * * *', 'visualizer.views.scheduled_refresh')
+]

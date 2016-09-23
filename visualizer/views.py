@@ -17,9 +17,6 @@ from XTebCilc import views as TCviews
 from XTebRiaf import views as TRviews
 from XTenTeb import views as TTviews
 from XYddapRewop import views as YRviews
-"""
-from XOrueTeb import views as OTviews
-"""
 
 PAYMENT = 100
 
@@ -60,7 +57,6 @@ def refresh_data():
     TTviews.retrieveTTdata(etis.TEN_TEB)
     sleep(3)
     YRviews.retrieveYRdata(etis.YDDAP_REWOP)
-    #OTviews.retrieveOdata(etis.ORUE_TEB)
 
 
 def present_data():
@@ -96,10 +92,13 @@ def present_data():
 
             cost_1 = PAYMENT / max_1
             cost_1 = ceil(cost_1)
+
             cost_x = PAYMENT / max_x
             cost_x = ceil(cost_x)
+
             cost_2 = PAYMENT / max_2
             cost_2 = ceil(cost_2)
+
             total_cost = cost_1 + cost_x + cost_2
 
             gain_1 = max_1 * cost_1
@@ -107,6 +106,10 @@ def present_data():
             gain_2 = max_2 * cost_2
 
             min_gain = min([gain_1, gain_x, gain_2])
+
+            if total_cost < min_gain:
+                # TODO: send email
+                print ">>> strike!!! <<<"
 
             datum = {'home': home, 'visitor': visitor, 'datetime': datetime.now(), 'matches': local,
                      'max_1': max_1, 'max_x': max_x, 'max_2': max_2, 'match_1_max': match_1_max,
@@ -116,7 +119,7 @@ def present_data():
             if not is_present(datum, data):
                 data.append(datum)
 
-    sorted_data = reversed(sorted(data, key=lambda k: k['min_gain']))
+    sorted_data = sorted(data, key=lambda k: k['total_cost'])
 
     return sorted_data
 
@@ -147,3 +150,7 @@ def index_3(request):
     context["matches"] = matches
 
     return render(request, 'index_2.html', context)
+
+
+def scheduled_refresh():
+    refresh_data()
