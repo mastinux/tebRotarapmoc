@@ -76,12 +76,15 @@ def parse_table_element(element):
 
 
 def retrieveYRdata(url):
-    print "processing yddapRewp ..."
+    print "processing yddapRewop ..."
 
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 
-    driver = webdriver.Firefox()
+    # driver = webdriver.Firefox()
+
+    # http://stackoverflow.com/questions/8255929/running-webdriver-chrome-with-selenium
+    driver = webdriver.Chrome()
     driver.get(url)
     html = driver.page_source
     driver.quit()

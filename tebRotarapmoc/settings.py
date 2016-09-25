@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from . import credentials
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -134,3 +135,12 @@ STATICFILES_DIRS = (
 CRONJOBS = [
     ('*/15 * * * *', 'visualizer.views.scheduled_refresh')
 ]
+
+# https://docs.djangoproject.com/en/1.10/topics/email/
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = credentials.SOURCE_EMAIL_ADDRESS
+EMAIL_HOST_PASSWORD = credentials.SOURCE_EMAIL_PW
+DEFAULT_FROM_EMAIL = credentials.SOURCE_EMAIL_ADDRESS
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -4,9 +4,10 @@ from io import StringIO
 import execjs
 from webbrowser import open as webbrowser_open
 import selenium.webdriver as webdriver
-from datetime import date
-from retriever.models import Match
 from pyvirtualdisplay import Display
+from datetime import date
+from time import sleep
+from retriever.models import Match
 
 # CHECKED
 
@@ -82,8 +83,12 @@ def retrieveIdata(url):
     display = Display(visible=0, size=(1024, 1024))
     display.start()
 
-    driver = webdriver.Firefox()
+    # driver = webdriver.Firefox()
+
+    # http://stackoverflow.com/questions/8255929/running-webdriver-chrome-with-selenium
+    driver = webdriver.Chrome()
     driver.get(url)
+    sleep(5)
     html = driver.page_source
     driver.quit()
 

@@ -1,3 +1,4 @@
 *.idea/
 *.pyc
 visualizer/etis.py
+visualizer/credentials.py
