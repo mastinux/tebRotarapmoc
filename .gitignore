@@ -1,3 +1,4 @@
 *.idea/
 *.pyc
 visualizer/etis.py
+tebRotarapmoc/credentials.py

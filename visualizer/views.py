@@ -62,16 +62,23 @@ def refresh_data():
     YRviews.retrieveYRdata(etis.YDDAP_REWOP)
 
 
-def comunicate_result(h, v, o1, m1, ox, mx, o2, m2):
-    print ">>> strike!!! <<<"
+def comunicate_result(h, v, o1, m1, c1, g1, ox, mx, cx, gx, o2, m2, c2, g2, tc, mg):
+    #print ">>> strike!!! <<<"
 
-    msg = h + "-" + v + " " + o1 + "(" + str(m1) + ") " + ox + "(" + str(mx) + ") " + o2 + "(" + str(m2) + ")"
+    msg = h + "-" + v + "\n" \
+          + o1 + "\tq: " + str(m1) + "\tc: " + str(c1) + "\tg: " + str(g1) + "\n"\
+          + ox + "\tq: " + str(mx) + "\tc: " + str(cx) + "\tg: " + str(gx) + "\n"\
+          + o2 + "\tq: " + str(m2) + "\tc: " + str(c2) + "\tg: " + str(g2) + "\n" \
+          "tc: " + str(tc) + "\nmin g: " + str(mg)
 
+    print msg
+    """
     send_mail("Good event",
               msg,
               credentials.SOURCE_EMAIL_ADDRESS,
               [credentials.DESTINATION_EMAIL_ADDRESS],
               fail_silently=False,)
+    """
 
 
 def present_data():
@@ -141,8 +148,8 @@ def present_data():
                 data.append(datum)
 
             if total_cost < min_gain:
-                # todo: extend message to send
-                comunicate_result(home, visitor, origin_1, max_1, origin_x, max_x, origin_2, max_2)
+                comunicate_result(home, visitor, origin_1, max_1, cost_1, gain_1, origin_x, max_x,  cost_x, gain_x,
+                                  origin_2, max_2, cost_2, gain_2, total_cost, min_gain)
 
     sorted_data = sorted(data, key=lambda k: k['total_cost'])
 
