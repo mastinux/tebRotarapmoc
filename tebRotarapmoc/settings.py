@@ -39,17 +39,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'XAgniw',
     'XAzzagTeb',
     'XIans',
-    'XInuTeb',
     'XLasis',
     'XMailiwLlih',
     'XNiwb',
-    'XOOOTrops',
     'XOcipit',
     'XOcoigElatigid',
-    'XOrueTeb',
     'XRetteb',
     'XTebCilc',
     'XTebRiaf',
@@ -58,9 +54,6 @@ INSTALLED_APPS = (
 
     'visualizer',
     'retriever',
-
-    #'pdfrw',
-    #'execjs',
 
     'django_crontab',
 )

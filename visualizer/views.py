@@ -21,7 +21,7 @@ from retriever.models import Match
 from tebRotarapmoc import credentials
 from . import etis
 
-PAYMENT = 100
+PAYMENT = 10
 
 
 def is_present(datum, data):
@@ -63,22 +63,19 @@ def refresh_data():
 
 
 def comunicate_result(h, v, o1, m1, c1, g1, ox, mx, cx, gx, o2, m2, c2, g2, tc, mg):
-    #print ">>> strike!!! <<<"
+    print ">>> strike!!! <<<"
 
-    msg = h + "-" + v + "\n" \
-          + o1 + "\tq: " + str(m1) + "\tc: " + str(c1) + "\tg: " + str(g1) + "\n"\
+    msg = h + "-" + v + "\n\n" \
+          + o1 + "\tq: " + str(m1) + "\tc: " + str(c1) + "\tg: " + str(g1) + "\n" \
           + ox + "\tq: " + str(mx) + "\tc: " + str(cx) + "\tg: " + str(gx) + "\n"\
-          + o2 + "\tq: " + str(m2) + "\tc: " + str(c2) + "\tg: " + str(g2) + "\n" \
+          + o2 + "\tq: " + str(m2) + "\tc: " + str(c2) + "\tg: " + str(g2) + "\n\n"\
           "tc: " + str(tc) + "\nmin g: " + str(mg)
 
-    print msg
-    """
     send_mail("Good event",
               msg,
               credentials.SOURCE_EMAIL_ADDRESS,
               [credentials.DESTINATION_EMAIL_ADDRESS],
               fail_silently=False,)
-    """
 
 
 def present_data():
@@ -97,29 +94,43 @@ def present_data():
         if len(local) > 1:
             max_1 = local[0].price_1
             match_1_max = 0
-            origin_1 = local[0].origin
+
             max_x = local[0].price_x
             match_x_max = 0
-            origin_x = local[0].origin
+
             max_2 = local[0].price_2
             match_2_max = 0
-            origin_2 = local[0].origin
-
-            # TODO: remove not relevant values
 
             for idx, local_match in enumerate(local):
                 if local_match.price_1 > max_1:
-                    max_1 = local_match.price_1
                     match_1_max = idx
-                    origin_1 = local_match.origin
+
                 if local_match.price_x > max_x:
-                    max_x = local_match.price_x
                     match_x_max = idx
-                    origin_x = local_match.origin
+
                 if local_match.price_2 > max_2:
-                    max_2 = local_match.price_2
                     match_2_max = idx
-                    origin_2 = local_match.origin
+
+            rows = list()
+
+            local_match = local[match_1_max]
+            rows.append(local_match)
+            max_1 = local_match.price_1
+            origin_1 = local_match.origin
+
+            local_match = local[match_x_max]
+            rows.append(local_match)
+            max_x = local_match.price_x
+            origin_x = local_match.origin
+
+            local_match = local[match_2_max]
+            rows.append(local_match)
+            max_2 = local_match.price_2
+            origin_2 = local_match.origin
+
+            match_1_max = 0
+            match_x_max = 1
+            match_2_max = 2
 
             cost_1 = PAYMENT / max_1
             cost_1 = ceil(cost_1)
@@ -138,7 +149,7 @@ def present_data():
 
             min_gain = min([gain_1, gain_x, gain_2])
 
-            datum = {'home': home, 'visitor': visitor, 'datetime': datetime.now(), 'matches': local,
+            datum = {'home': home, 'visitor': visitor, 'datetime': datetime.now(), 'matches': rows,
                      'max_1': max_1, 'max_x': max_x, 'max_2': max_2, 'match_1_max': match_1_max,
                      'match_x_max': match_x_max, 'match_2_max': match_2_max, 'cost_1': cost_1, 'cost_x': cost_x,
                      'cost_2': cost_2, 'gain_1': gain_1, 'gain_x': gain_x, 'gain_2': gain_2, 'min_gain': min_gain,
@@ -148,8 +159,11 @@ def present_data():
                 data.append(datum)
 
             if total_cost < min_gain:
-                comunicate_result(home, visitor, origin_1, max_1, cost_1, gain_1, origin_x, max_x,  cost_x, gain_x,
-                                  origin_2, max_2, cost_2, gain_2, total_cost, min_gain)
+                comunicate_result(home, visitor,
+                                  origin_1, max_1, cost_1, gain_1,
+                                  origin_x, max_x,  cost_x, gain_x,
+                                  origin_2, max_2, cost_2, gain_2,
+                                  total_cost, min_gain)
 
     sorted_data = sorted(data, key=lambda k: k['total_cost'])
 
