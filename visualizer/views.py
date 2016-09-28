@@ -14,6 +14,7 @@ from XOcipit import views as Oviews
 from XOcoigElatigid import views as OEviews
 from XRetteb import views as Rviews
 from XTebCilc import views as TCviews
+from XTenalpNiwEIE import views as TNviews
 from XTebRiaf import views as TRviews
 from XTenTeb import views as TTviews
 from XYddapRewop import views as YRviews
@@ -54,6 +55,8 @@ def refresh_data():
     OEviews.retrieveOEdata(etis.OCOIG_ELATIGID)
     sleep(1)
     TCviews.retrieveTCdata(etis.TEB_CILC)
+    sleep(3)
+    TNviews.retrieveMLdata(etis.TENALP_NIW)
     sleep(1)
     TRviews.retrieveTRdata(etis.TEB_RIAF)
     sleep(3)
